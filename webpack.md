@@ -25,7 +25,7 @@ webpack 4 默认开启 `code splitting`
 
 页面入口会打包出一个 `app.js`包括用的组件库，element-ui、router、store、utils、icons 等，如果修改了一个 utils 函数，会导致整个 app.xxx.js 发生变化，我们分为几部分
 
-1.  chunk-libs : `react/vue/vuex/mobx/xx-router/axios` 等很久不变的 
+1.  chunk-libs : `react/vue/vuex/mobx/xx-router/axios` 等很久不变的
 2. UI 组件库:  `element-ui/antd` 因为他们很少变动
 3. 必要组件：`路由表/全局state/顶底侧边栏/svg图标` 等默认会打包进 app.js
 4. 非必要组件：如上面我们说的小的 table 组件，可以打包进 app.js 也可以分出来 chunk-commons
@@ -55,7 +55,7 @@ webpack 4 默认开启 `code splitting`
 
 所以我们希望能够能够只更新那些有修改的 chunk 的hash，其他的hash则不变。webpack 提供了三种类型
 
-1. hash 是和构建相绑定的，如果构建发生任何变化，所有的hash也会改变。配置 `name.[hash].js` 
+1. hash 是和构建相绑定的，如果构建发生任何变化，所有的hash也会改变。配置 `name.[hash].js`
 2. chunkhash 是基于entry的，每个entry 有自己的hash，每个entry 的变化只影响自己的hash，配置是 `name.[chunkhash].js`，这个时候可能还需要使用NamedModulesPlugin 插件来命名模块。
 3. contenthash，是专用于 ExtractTextPlugin 的一个hash，为了避免每次改变css，导致 js 的 chunkhash 也发生变化，所以在插件里配置 name.[contenthash].css 会避免这个问题。
 
@@ -78,7 +78,7 @@ plugin 是用来扩展 webpack功能，在 webpack 编译的过程中，在自�
 3. 执行 complier.run，生成一个 compilation 对象
 4. 触发 compiler.make，调用 compilation.buildMoulde 创建主模块
 5. 生成入口文件 AST，通过 AST 分析和递归加载模块
-6. 分析完所有模块后，执行 compilation.seal 处理 chunk 
+6. 分析完所有模块后，执行 compilation.seal 处理 chunk
 7. 执行 complier.emitAssets 把生成的文件输出到 output
 
 ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9b75a4d9-5692-4ccc-badd-3d79393ccca8/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9b75a4d9-5692-4ccc-badd-3d79393ccca8/Untitled.png)
