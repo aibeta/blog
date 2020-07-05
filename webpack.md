@@ -93,7 +93,7 @@ plugin 是用来扩展 webpack功能，在 webpack 编译的过程中，在自�
 - `compilation` 它可以访问所有的模块和依赖
 - `javascriptParser` 是 parser 实例
 
-```jsx
+```javascript
 compiler.hooks.normalModuleFactory.tap('MyPlugin', factory => {
   factory.hooks.parser.for('javascript/auto').tap('MyPlugin', (parser, options) => {
     parser.hooks.someHook.tap(/* ... */);
@@ -137,7 +137,7 @@ apply 方法会把所有所有 updated 模块标记为无效，对视每个无�
 
 如下示例，动态 import 返回的是一个promise，如果想使用 await 语法，需要使用 babel 和一个动态 import 的插件。
 
-```jsx
+```javascript
 async function getComponent() {
 	const { default: _ } = await import(/* webpackChunkName: "lodash" */ 'lodash');
 	element.innerHTML = _.join(['Hello', 'webpack'], ' ');
@@ -162,7 +162,7 @@ getComponent().then(component => {
 
 ### 怎么点击弹出来一个 modal，动态加载一个模块?
 
-```jsx
+```javascript
 // 使用 React.lazy 来实现
 const OtherComponent = React.lazy(() => import('./OtherComponent'));
 
@@ -177,7 +177,7 @@ function MyComponent() {
 }
 ```
 
-```jsx
+```javascript
 
 ```
 

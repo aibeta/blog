@@ -47,7 +47,7 @@ CDN 使用很多台边缘存储服务器
 
 ### 图片优化（懒加载）
 
-```jsx
+```javascript
 // #1 使用 data-src
 // 有点：简单高效，但是会加载所有图
 <img data-src="image.jpg" alt="test image">
@@ -66,17 +66,17 @@ function(img) {
 });
 ```
 
-```jsx
+```javascript
 // #2
 ```
 
 [codepen](https://codepen.io/rposbo/pen/ONmgVG?__cf_chl_jschl_tk__=62dfd22a6a263ddd212f51d204bcd72729e28844-1585595406-0-AQhOPmdZNfw-RN6E-G6KkL2lq1RqkCvRuCtpy9SRofM7pV23nR79yld2aIbiVU3uNHCFx6PZKAoNJoBIf7WqD39Pzr7LSCZe7bCca_I2aShyvAqaQ1okeQhtrYXgCq66yW_iljppNMZeEfRjtay_jyguwTEnE0gdPUKD_u4U_L42FJ8BG1VMeGBxueTbt-KehpHSAc16_QntcZ5HEOY9_m-wixTL2DD12pNUA5veDNenpARsdyYejf-mie7R1xmWXkIyBmRFzZDuTMzn3TzXVNc6GWrxtmenisWa-lnfB1RJaNF4bUes0IV_L5_q3t8wEszCD-8qfv_UMykyg4FKCDfDNcHv9vsYKT8ftNRY1pYZ)
 
-```jsx
+```javascript
 #3 bLazy.js
 ```
 
-```jsx
+```javascript
 #4 使用毛玻璃特效
 
 https://github.com/craigbuckler/progressive-image.js
@@ -88,7 +88,7 @@ https://github.com/craigbuckler/progressive-image.js
     - DNS 域名解析，把domain解析成ip
     - 如果我们要向第三方的网站发起一个请求，那么加入
 
-    ```jsx
+    ```javascript
     <link rel="dns-prefetch"
     	href="//somewidget.example.com">
     ```
@@ -97,14 +97,14 @@ https://github.com/craigbuckler/progressive-image.js
     - 如果直到用户要进入某个页面，去 prefetch 页面图片
     - 比如一个下单流程，搜索结果，下一页
 
-    ```jsx
+    ```javascript
     <link rel="prefetch"
     	href="//example.com/future-image.jpg">
     ```
 
 3. Page prefetching/prerendering
 
-    ```jsx
+    ```javascript
     <link rel="prerender"
     	href="//example.com/future-page.html">
     ```

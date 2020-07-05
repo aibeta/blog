@@ -78,7 +78,7 @@ while(unsort_array.length > 0) {
     - 如何缩小问题需要视情况，上面的问题我们每次把短边长的正方形去掉，就可以了
     - 思考一下，我们下面使用了每次移除最多个正方形，其实每次移除一个也是可以的
 
-```jsx
+```javascript
 // 代码实现，长的边为 long 短的边为 short
 function getMaxLand(long, short) {
   const maxCount = Math.floor(long / short); // 以短边作为变长的正方形的最大个数
@@ -97,7 +97,7 @@ getMaxLand(1680, 640)
     - 最简单的方案就是数组只有一个元素，那么该元素就是数组的和
 - 逐步把问题缩小为 base case
 
-```jsx
+```javascript
 function getSum(array) {  
   if(array.length === 1) return array[0];
   const item = array.shift();
