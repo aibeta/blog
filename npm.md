@@ -1,0 +1,43 @@
+# Npm
+
+### npm
+
+- npm -g 安装的包会保存在哪里？
+    - /usr/local/bin/npm ??
+- 快速创建一个 node project
+    - node init --yes
+- 安装指定版本的 lib
+    - npm install lib@1.1.1
+- node i --save 可以省略吗？
+    - 可以省略 save，新版本的 node 会自己将依赖加入 dependencies
+- var _ = require('underscore') 有几层含义？
+    - 1:核心 module，2: 文件或路径，3:node_modules
+- 如果自己使用 npm 包版本和 mongoose 使用的版本冲突，怎么办？
+    - 那么 mongoose 会在自己的文件路径下创建一个 node_modules 包含所使用的版本
+- npm 使用的是 semver 是什么意思？
+    - 每个 lib 的3个版本意思，Major.Minor.Patch 比如 node@8.9.1
+    - Major(存在破坏性的更新), Minor(新特性，但是无破坏性更新)，Patch(修复了bug),
+- 指定 dependencies 的规则是什么
+    - "mongoose": "^4.13.6", // 等同于 4.x，安装的时候，会更新的 Minor
+    - "underscore": "~1.8.3", // 波浪号，等同于 1.8.x，只更新的 patch
+    - "underscore": "1.8.3", // 这个是指定了版本，只装这个
+- 怎么看每个lib 的依赖
+    - 使用 npm list 显示每个 lib 所有层级的依赖
+    - npm list --depth=0
+    - npm view monggose dependencies 查看 lib 的所有依赖版本
+    - npm view mongoose versions 查看 lib 的所有版本
+- 怎么查看需要更新的包？
+    - npm outdated/ npm -g outdated
+    - npm update
+    - npm i -g npm-check-updates 可以进行检查和进行破坏性的更新，不过只是修改了 package.json，还需要 install
+- package-lock.json 的作用是什么？
+- dependencies 和 devDependencies 的区别是什么？
+    - dev 只是在开发环境进行，比如 jshint
+- 卸载一个 lib？
+    - npm un mongoose
+- 怎么发布和更新一个lib?
+    - 注册 npm adduser
+    - npm login
+    - npm publish
+    - 更新版本 npm version minor ，再发布
+- npm link 测试本地的包

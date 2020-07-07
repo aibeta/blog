@@ -1,5 +1,87 @@
 # Webpack
 
+## webpack
+
+是一个静态模块打包工具，当webpack 会构建一个依赖图，把项目的每个模块生成一个或者多个包。
+
+### 入口
+
+意味着依赖图的起点，默认是 `./src/index.js`
+
+### 出口
+
+配置生成的包的路径的名称
+
+### Loaders
+
+默认情况，webpack 只能理解 js 和 json，loader 可以让 webpack 处理其他类型的文件，并且把他们转化为有效的模块。loader 有两个属性 
+
+- test 设置需要转换的文件格式
+- use 指定 loader
+
+意思就是在遇到之指定格式的文件时，使用指定的 loader 转换它，然后再加入 bundle。
+
+use 里 loader 会依次从下往上执行
+
+```jsx
+module.exports = {
+	modules: {
+		rules: [
+			{test: /\.txt$/, use: 'raw-loader'}
+		],
+		plugins: [
+	    new HtmlWebpackPlugin({template: './src/index.html'})
+	  ]
+	}
+}
+```
+
+### loader 原理
+
+loader 是一个node模块，导出一个函数。如果一个文件需要被转换，那么就会调用这个函数，这个函数可以通过 this 上下文访问loader api。总体的说，loader 会接收源文件内容的string，然后返回 js code的 string 或者 buffer，也可以额外返回sourceMap。
+
+### 插件
+
+插件可以用于 bundle 优化，资源管理，环境变量的注入等。
+
+webpack 插件是一个 js 对象，有一个 `apply`方法，被 webpack compiler 调用，使函数可以接触完整的编译周期
+
+```jsx
+const pluginName = 'ConsoleLogOnBuildWebpackPlugin';
+
+class ConsoleLogOnBuildWebpackPlugin {
+  apply(compiler) {
+    compiler.hooks.run.tap(pluginName, compilation => {
+      console.log('The webpack build process is starting!!!');
+    });
+  }
+}
+
+module.exports = ConsoleLogOnBuildWebpackPlugin;
+```
+
+### HMR 原理
+
+1. 应用询问 HMR runtime 有无更新
+2. runtime 异步下载更新，通知应用
+3. 应用请求runtime apply 更新
+4. runtime 同步地 apply 更新
+
+### 在 compiler 里
+
+更新包括两部分：
+
+1. 更新过的 manifest(JSON)
+2. 一个或更多的更新的 chunks(javascript)
+
+这个manifest 里有新的comliation 哈希和一个 updated chunks 的列表，每一个chunks里面所有更新模块的新代码
+
+在内存里存储每次构建的 模块id 和 chunk id
+
+### runtime
+
+runtime 支持两个方法，check 和 apply，check 会去http请求 update manifest 文件，如果成功就去比较 chunks，然后下载需要的，完成后切换到 ready 状态。
+
 ### webpack 打包原理?
 
 webpack 是一个命令行工具，把一个项目的静态资源转换成 bundles，在 nodejs 上我们可以直接使用cjs 模块，而webpack 通过一个 entry point 可以让我们在前端项目里使用js 模块。
@@ -180,6 +262,91 @@ function MyComponent() {
 ```javascript
 
 ```
+
+### 可以利用的 webpack 优化
+
+- webpack 3 有code splitting 和动态导入
+
+```jsx
+if (document.querySelector('.mega-widget')) {
+	import('./mega-widget');
+}
+```
+
+- webpack 把自己的runtime 生成到了 js 里，可以自己提取出来，放在 bundle.js 之前
+- 一堆babel 和 polyfill 用于 不支持 async 之类的浏览器，打包了很多内容，其实可以 根据 babel-preset-env 打包出不同版本浏览器需要的包
+
+```jsx
+// A dirty but efficient way is to place the following in an inline script:
+(function() {
+    try {
+    new Function('async () => {}')();
+    } catch (error) {
+    // create script tag pointing to legacy-bundle.js;
+    return;
+    }
+    // create script tag pointing to modern-bundle.js;;
+})();
+```
+
+### webpack 问题
+
+- 多个loader 的意义是什么，他们的顺序是什么？
+    - 多个 loader 顺序从右往左依次调用
+- 生成了 文件hash，怎么注入到 html？
+    - 使用 HtmlWebpackPlugin
+- HtmlWebpackPlugin 怎么分离注入？
+    - 使用 chunks
+- 怎样区分webpack 和 webpack -w
+    1. 通过 argv
+    2. 区分之后，要压缩
+    3. 要 post css
+- webpack 怎么自定义命令，实现拷贝、删除?
+    1. 使用 npm 命令来做
+- server 和 dev 的区别?
+    - 注入的时候，html 引用的 html 和 css 应该是不一样的
+
+### Webpack Debug SourceMap
+
+- 开启 sourcemap devtool: 'source-map',
+- import css 必须安装 css-loader style-loader
+- import less 必须安装 less-loader less
+- __dirname”是node.js中的一个全局变量，它指向当前执行脚本所在的目录
+- css 也有 sourcemap, 在 loader 里加？sourceMap 即可
+- npm srart 会自动调用 node server.js
+
+### tree-shaking
+
+1. 用于描述移除 JS 中无用代码的术语
+2. 依赖 ES2015 中的 import 和 export 语句，用于检测模块是否被导出和使用
+3. 首先，为了把采用 ES6 模块化的代码交给 Webpack，需要配置 Babel 让其保留 ES6 模块化语句，修改 .babelrc
+4. 必需处于生产模式，webpack 会在压缩代码时进行 tree-shaking
+5. 需要设置 useExports 设置为 true，此时webpack 会标记那些无用代码
+6. 最后需要一个压缩器，需要支持删除这些代码，比如 terserPluguin
+
+```jsx
+// Base Webpack Config for Tree Shaking
+const config = {
+ mode: 'production',
+ optimization: {
+  usedExports: true,
+  minimizer: [
+   new TerserPlugin({...})
+  ]
+ }
+```
+
+## 副作用
+
+一段代码没有使用并不意味着它没用，比如引入了全局的样式表，用于配置的 js 文件。
+
+我们需要让 webpack 标记这些有副作用的文件，避免 tree-shaking，默认情况下，所以的文件都有副作用。
+
+package.json 有一个属性 sideEffects 用来设置副作用，有三个值。
+
+1. true 默认值，所有文件都不能 tree-shaking
+2. false，所有文件都可以 tree-shaking
+3. [...] 一个文件路径的数组，说明除了里面的，其他的都没有副作用，可以安全的tree-shaking
 
 ### reference
 

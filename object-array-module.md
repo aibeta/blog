@@ -175,3 +175,64 @@ import foo, { bar ,baz as BAZ} from 'foo';
 
 import * as foo from 'foo';
 ```
+
+### CommonJS and ES6 module
+
+[Learning JavaScript Design Patterns](https://learning.oreilly.com/library/view/learning-javascript-design/9781449334840/ch11s03.html)
+
+Common JS是一个模块提议，定义了简单的 API 用于声明模块，可以在非浏览器使用。
+
+从结构的角度看，一个 CommonJS 模块就是一段可以重用的 JS，导出指定对象。
+
+CommonJS 模块包含两部分：一个名为 exports 的对象
+
+另一个 require 函数，可以从其他模块中引用
+
+```jsx
+// Example 11-9. Understanding CommonJS: require() and exports
+
+// package/lib is a dependency we require
+var lib = require( "package/lib" );
+
+// behaviour for our module
+function foo(){
+    lib.log( "hello world!" );
+}
+
+// export (expose) foo to other modules
+exports.foo = foo;
+```
+
+```jsx
+var modA = require( "./foo" );
+var modB = require( "./bar" );
+
+// v1
+exports.app = function(){
+    console.log( "Im an application!" );
+}
+
+exports.foo = function(){
+    return modA.helloWorld();
+}
+
+// v2
+module.exports = {
+
+}
+```
+
+node 支持 CommonJS
+
+## 它和 ES6 module 的区别是什么
+
+es6 中每个js 文件就是一个模块，那么export 可以有两种：1是从一个文件 export 多个 js 对象，而是export 一个对象
+
+```jsx
+// v1
+export const print(message) => console.log(message)
+
+// v2
+export default {}
+
+```
