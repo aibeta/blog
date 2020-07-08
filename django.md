@@ -24,21 +24,21 @@
 
 ## run
 
-- run：python [manage.py](http://manage.py/) runserver
-- 创建 App：python [manage.py](http://manage.py/) startapp polls
+- run：python manage.py runserver
+- 创建 App：python manage.py startapp polls
 
 ## part 2
 
 - 设置时区 TIME_ZONE = 'Asia/Shanghai'
-- 迁移：python [manage.py](http://manage.py/) migrate 根据 apps 创建需要的数据表
-- 引入：python [manage.py](http://manage.py/) makemigrations polls
-- 数据库创建：python [manage.py](http://manage.py/) sqlmigrate polls 0001
+- 迁移：python manage.py migrate 根据 apps 创建需要的数据表
+- 引入：python manage.py makemigrations polls
+- 数据库创建：python manage.py sqlmigrate polls 0001
 
 ### 三步更新model
 
 - 更改 [models.py](http://models.py/)
-- 引入：python [manage.py](http://manage.py/) makemigrations
-- 更新： python [manage.py](http://manage.py/) migrate
+- 引入：python manage.py makemigrations
+- 更新： python manage.py migrate
 
 ### shell
 
@@ -49,18 +49,18 @@
 - 模板里 url 使用相对路径
 - url 可以使用命名空间
 - 可以使用默认的模板 question_detail, question_list
-- 测试：python3.7 [manage.py](http://manage.py/) test polls
+- 测试：python3.7 manage.py test polls
 
 # 创建
 
 - 创建 venv $ python3 -m venv myweb
 - 生效 $ source myweb/bin/activate
 - 安装 $ pip install Django==2.1.3
-- 创建 $ python [manage.py](http://manage.py/) startapp pages
+- 创建 $ python manage.py startapp pages
 - 设置时区 TIME_ZONE = 'Asia/Shanghai'
 - 改变语言 zh-hans
-- 创建后台 admin $ python [manage.py](http://manage.py/) migrate
-- 创建用户 $ python [manage.py](http://manage.py/) createsuperuser (admin/liyuguo@jinlinbao.com/jlb123456)
+- 创建后台 admin $ python manage.py migrate
+- 创建用户 $ python manage.py createsuperuser (admin/liyuguo@jinlinbao.com/jlb123456)
 
 # 安装
 
@@ -68,9 +68,9 @@
 - pip install django-bootstrap4
 - 定义 pages 的 models
 - 在 webapp/setting 中引入
-- 创建 models: $ python [manage.py](http://manage.py/) makemigrations pages
-- 创建数据表：$ python [manage.py](http://manage.py/) sqlmigrate polls 0001
-- 应用：$ python [manage.py](http://manage.py/) migrate
+- 创建 models: $ python manage.py makemigrations pages
+- 创建数据表：$ python manage.py sqlmigrate polls 0001
+- 应用：$ python manage.py migrate
 
 ## 启动
 
@@ -80,8 +80,8 @@
 - pip install Django==2.1.3
 - python3.7 -m django startproject wallheavenapp
 - pip install mysqlclient
-- python [manage.py](http://manage.py/) startapp weixinsp
-- python [manage.py](http://manage.py/) inspectdb > weixinsp/models.py
+- python manage.py startapp weixinsp
+- python manage.py inspectdb > weixinsp/models.py
 
 ## 一些常见问题
 
@@ -105,7 +105,7 @@
 - 分页的 previous 和 next (在 template 有 has_previous 和 previous_page_number)
 - 文章里的上一篇和下一篇 ( 在 detail view 里使用 filter 过滤出来)
 - 一个 quertSet 的长度(使用count方法来获取)
-- 替换 template 里面的 url(在 template 里使用 {% url 'web:detail' id%} 获取 url)
+- 替换 template 里面的 url(在 template 里使用 `{% url 'web:detail' id%} 获取 url)`
 - 文章里面上一篇和下一篇查出来的东西好像不太对哦(更改了 filter)
 - 控制一下发布时间的格式 (在 template 里加 |date:'Y-m-d H:i:s')
 - page/list/2 长度为1时跳回分类页面(不用，保留就好了)
