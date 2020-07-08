@@ -106,11 +106,6 @@
 - 文章里的上一篇和下一篇 ( 在 detail view 里使用 filter 过滤出来)
 - 一个 quertSet 的长度(使用count方法来获取)
 - 替换 template 里面的 url(在 template 里使用
-
-```python
-{% url 'web:detail' id%} 获取 url)
-```
-
 - 文章里面上一篇和下一篇查出来的东西好像不太对哦(更改了 filter)
 - 控制一下发布时间的格式 (在 template 里加 |date:'Y-m-d H:i:s')
 - page/list/2 长度为1时跳回分类页面(不用，保留就好了)
@@ -125,7 +120,7 @@
 - 看一下文章的样式(两种 title、宽度、图片宽度、居中)
 - 看一下 nav 的样式()
 
-需求
+### 需求
 
 - menu 可以自定义 link (默认)
 - dropdown menu 可以配置为是否显示在 menu 中
