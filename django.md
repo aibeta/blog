@@ -105,7 +105,12 @@
 - 分页的 previous 和 next (在 template 有 has_previous 和 previous_page_number)
 - 文章里的上一篇和下一篇 ( 在 detail view 里使用 filter 过滤出来)
 - 一个 quertSet 的长度(使用count方法来获取)
-- 替换 template 里面的 url(在 template 里使用 `{% url 'web:detail' id%} 获取 url)`
+- 替换 template 里面的 url(在 template 里使用
+
+```python
+{% url 'web:detail' id%} 获取 url)
+```
+
 - 文章里面上一篇和下一篇查出来的东西好像不太对哦(更改了 filter)
 - 控制一下发布时间的格式 (在 template 里加 |date:'Y-m-d H:i:s')
 - page/list/2 长度为1时跳回分类页面(不用，保留就好了)
