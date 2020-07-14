@@ -48,6 +48,7 @@
 
 - go Slice 结构和String类型相似，区别是取消了只读的限制,结构体数组头信息多了一个 cap 表示最大容量
 - go Slice 每个slice 有独立的长度和容量信息，切片的头信息里有底层数据的指针
+
     ```go
     var (
     a []int
@@ -61,22 +62,27 @@
     i = make([]int, 0, 3)
     )
     ```
+
 - go Slice 和数组指针的操作方式类型，在对切片进行赋值或参数传递时，只是复制了切片头的信息
 - go Slice 的类型和数组不同，切片的类型和长度无关，相同类型元素构成的切片的类型是相同的
 - go Slice 可以使用泛型函数 append 向切片位置添加元素 `a = append(a, []int{1,2,3}...)` ...叫做解包，在头部添加元素可以用`a = append([]int{0}, a...)`
 - go Slice 在头部添加元素会导致每个元素重新分配内存，性能会差点儿
 - go Slice 在中间添加一个元算
+
     ```go
     a = append(a, 0)
     copy(a[i+i:], a[i:])
     a[i]=x
     ```
+
 - go Slice 在中间添加多个元素
+
     ```go
     a = append(a, x...)
     copy(a[i+len(x):], a[i:])
     copy[a[i:], x]
     ```
+
 - go Slice 删除开头元素`a = a[1:]` 或者n个元素 `a=a[n:]`, 也可以用 append 和 copy 实现 `a = append(a[:0], a[1:]...)` `a = a[:copy(a, a[1:])]`，删除中间元素也是可以通过 append 和 copy 实现
 - go Slice 删除尾部元素`a = a[:len(a) -1]` 或者n个元素 `a=a[:len(a)-n]`
 - go Slice 空切片是说 len 和 cap 都是0，但是它并不是一个 nil 值的切片
@@ -97,11 +103,17 @@
 - go func 函数是第一类对象，go 中分为具名和匿名函数，匿名函数` var Add = func(a, b int) int`
 - go func 可以接收多个参数，返回多个值，可变数量的参数其实是一个切片类型的参数
 - go func 在声明时可以给返回值命名，命名后可以通过名字修改返回值
-- go func 里有 defer 语句，可以声明一个匿名函数并调用 `defer func(){} ()`
 - go method 方法是OOP的概念，是一个类对象的成员函数
 - go method 中，我们先声明一个 type，再声明一个类型独有的方法 `func(f *File) Close() error{}`, 它们需要在一个包里
 - go inherit go 不支持传统的继承，而是通过在结构体内置匿名的成员来实现内部成员和成员类型的方法的继承
 - go polym 但是这种继承方法并不能实现多态特性，如果想要虚函数的多态，需要借助go语言接口实现
+- go func `func (this *H5handler)` 使用指针进行单例的传递
+
+### defer
+
+- go func 里有 defer 语句，可以声明一个匿名函数并调用 `defer func(){} ()`
+- go func defer 一个函数是指在函数返回后调用这个defer 后面的函数
+- 在context 调用 cancel 的时候为要 defer cancel()，确保后面的函数能够确保函数在返回前运行, cancel 本身则是为了释放资源
 
 ### 指针
 
@@ -134,6 +146,18 @@
 - go channel 对于带缓冲的channel，try it,
 - go 可以通过 select{} 来阻塞线程
 - sync.Mutex 超过1次的lock 会导致线程阻塞，mu.Unlock() 之后才会解除这个阻塞继续向下执行
+
+### channel
+
+- quit := make(chan os.Signal) 这个声明是什么意思? 声明了一个 os 类型的channel，并且赋值给quit
+- `<-quit` 是什么意思？ 从quit channel 中接收数据，如果一直没有数据，那么一直阻塞，此处没有没有发生赋值
+
+### 类型转化
+
+- templatePath.(string) 是把 templatePath 转换成 string 类型的一个操作
+- `templateInfo.(config.Template).Path` 进行格式转化
+- fmt.Sprintf("%s/tpl/**/*")? 把里面的内容格式化为一个字符串, 并且返回，所以前面是大写的S
+- fmt.Sprintf("%s:%d", "a", 1) 这个函数的返回值是什么？返回一个第一个格式化函数格式化后的 string
 
 ### reference
 
