@@ -117,6 +117,10 @@
 - [[bash]] bash
 - [[mac]] mac
 
+### 系统设计
+
+- [[system-design]] 系统设计
+
 ### CS 基础
 
 - [[data-structure]] 数据结构

@@ -9,11 +9,26 @@
 - 简短变量声明语句只有对已经在同级词法域声明过的变量才和赋值操作语句等价，如果变量是在外部词法域声明的，那么简短变量声明语句将会在当前词法域重新声明一个新的变量
 - 简短变量声明语句中必须至少要声明一个新的变量
 - 指针 fmt.Println(f() == f()) // "false" ？？
+- go new: 可以使用 new 函数创建一个指针p `p := new(int)`
+- go new: 每次调用new都会生成一个新的变量的地址，意思是创建出来的指针不相等
+- go new: 注意 new 只是一个预定义函数，所以可以在自己的函数里重新定义 
+- go fuzhi: ``m[key], x.(T), <-ch``
+- go type 类型名 底层类型，来声明别名，也可以使用 T(x) 来进行类型转换
+- go type 许多类型内部都有 String 方法，使用fmt 打印时，会调用这个方法
+- go unit32 and rune equals, they can replace with each other
+- go unit8 and byte equals, but byte more streessed the value is a raw type data
+- go string 内置的len函数可以返回一个字符串的字节数目，而不是 rune 数目, 因为utf8可占用两个或多个字节
+- go connst 声明的常量可以是无类型的
+- go iota 初始为0，在重复的时候+1
 
-### for
+## for
 
 - for initialization; condition; post {} 这三部分每一个部分都可胜利，甚至可以全省略
 - `for i :=0; i<len(s); i++`  和 `for _, char := range s` 等价
+- for range array 迭代可以避免数组越界
+- for range string 只能遍历UTF8编码的字符串，因为其他编码可是一个二进制数组结构
+- for range 想遍历原始的字节码，可以把字符串转为 []byte 字节序后再进行遍历 `for i, c := range []byte("世")`
+- for 按下标方式遍历字符串的字节数据 `for i:=0; i < len(s); i++`， 然后`fmt.Printf("%x", s[i])`
 
 ## Go Advanced
 
@@ -22,6 +37,8 @@
 - fmt.Printf("%T, %#v", b, b) 可以打印数组的类型和详细信息
 - go 中，函数传参都是以复制的方式传递的？那么上面的一句话怎么理解
 - go 函数中的闭包是以引用的方式访问外部变量的，其他复制和传参都是传值。
+- go recursive  go  使用 可变栈，不用考虑溢出的情况
+- go error 错误信息是以链式组合在一起的，在处理的时候不要换行
 
 ### 数组
 
@@ -32,6 +49,9 @@
 - go Array 结构体 `var l1=[2]image.Point`, `var l2=[...]image.Point({0,0}, {1,1})`
 - go Array 接口 `var unknown1 [2]interface()`, `var unknown2 = [...]interface{} {12,34}`
 - go Array 管道 `var chanList = [2]chan init{}`
+- go array 只有两个数组里所有的元素都是相等的时候，两个数组才是相等的
+- go array 数组在作为函数的参数被传递时，整个数组都会进行复制，对于数组的修改因此也与元数组无关
+- go array 为了解决上面的问题，我们可以不传数组，而是传一个数组指针
 
 ### 字符串
 
@@ -89,17 +109,55 @@
 - go Slice 一个len是0，但是cap 不是0的0长度切片确实很有用的初始化一个空切片 `f := c[:0]`
 - go Slice 高效的要点：1. 降低内存分配次数，2.保证append不超出cap
 - go Slice 切片的垃圾回收，以及切片类型的强制转换，看完不是特别理解
-
-- for range array 迭代可以避免数组越界
-- for range string 只能遍历UTF8编码的字符串，因为其他编码可是一个二进制数组结构
-- for range 想遍历原始的字节码，可以把字符串转为 []byte 字节序后再进行遍历 `for i, c := range []byte("世")`
-- for 按下标方式遍历字符串的字节数据 `for i:=0; i < len(s); i++`， 然后`fmt.Printf("%x", s[i])`
+ go slice 一般写作 []T，T 表示元素的类型，slice：data/len/cap
+- go slice 为什么说 slice 的元素不一定是数组的第一个元素，它跟数组有什么关系
+- go slice 是对数组的引用，扩展了slice，就意味着能访问更多的数组元素了
+- go slice 所以slice 声明 `s := []int{0,1}` 会隐式地创建一个数组，slice 指向这个数组
+- go slice x[m:n] 如果操作字符串会生成新的字符串，如果操作的是[]byte 会生成新的[]byte
+- go slice 除了bytes.Equal,其他的类型的slice没有内置的比较函数，但是可以自己实现逐个元素的比对
+- go slice 测试slice为空，使用len(s) 来判断，一个零值的slice等于nil，一个 nil值的slice并没有底层数组
+- go slice 模拟push `append(s, "")`
+- go slice 模式pop `top  = stack[len(stack) - 1]; stack = stack[:len(stack) -1]`
+- go slice 模拟remove `copy(slice[i:], slice[i+1:]); slice[:len(slice)-1]`
 
 - todo解释：go 通过隐式接口机制实现了鸭子面向对象模型
 - go main: go 程序的初始化是通过 main.main 开始的, 1. 导入包级常量 初始化这个包的常量和变量，执行 init 2. main
 
+### struct
+
+- go struct 结构体是一个聚合类型，结构体变量大写/小写开头`type Employee struct {ID int}`
+- go struct 可以通过.操作符和指针操作符来访问成员,
+- go struct 结构体无任何成员就是空结构体 struct{}，大小为0，不包含任何信息
+- go struct 可以作为函数的参数和返回值, 它同样会复制整个结构体对象，考虑效率的话可以使用指针
+- go struct 如果所有成员都可比较，那么结构体也可以比较
+- go struct 匿名成员的数据类型必须是命名的类型 或者指向一个命名的类型的指针
+- go struct 结构体字面量赋值无法简短地声明匿名类型，必须遵循形状类型声明时的结构
+
+### map
+
+- go map map[K]V 对应 key和value 的类型
+- go map 可以使用 `args := make(map[string]int)` 创建，或者`map[string]int {}`, 可以使用`args["a"]`访问value
+- go map 也可以 ` args := map[string]int { "alice": 31 }`
+- go map map中的元素并不是一个变量，所以不能进行取地址操作 
+- go map 使用for range 迭代map，每一次的key的顺序都不同，
+- go map 类型的零值是nil，此时 len(map) == 0
+- go map 用于测试map里面是否存在某个元素 `if age, ok := ages["bob"]; !ok{}`
+- go map 如果我们想让一个slice作为 key也是可以的，就是每次操作map时先把slice转为**string**
+
+
+### json
+
+- go json 结构体成员可以添加tag  `json:"released,omitempty"` omitempty 代表它可能为空
+- go json `json.Marshal` 可以把 一个结构体slice转化为json
+- go json `json.Unmarshal(data, &titles) ` 可以解析 titles  结构体，`var titles []struct { Title string }` 
+- go json 如果 json  名称和我们声明的结构体的成员名称不同，我们需要加上tag注明
+- go json 我们也可以使用  json.Decoder 从一个输入流里面解码json 数据
+
 ### 函数和方法
 
+- go func 参数没有默认值，每次调用必须按照声明顺序提供参数
+- go func 如果实参包括引用类型，slice、map、function、channel，可能导致实参被修改
+- go func 如果一个函数所有的返回值都有变量名字，那么就可以   bare  return
 - go func 函数是第一类对象，go 中分为具名和匿名函数，匿名函数` var Add = func(a, b int) int`
 - go func 可以接收多个参数，返回多个值，可变数量的参数其实是一个切片类型的参数
 - go func 在声明时可以给返回值命名，命名后可以通过名字修改返回值
@@ -121,6 +179,8 @@
 - 每个变量必然有对应的内存地址，通过指针可以直接读或更新对应变量的值，不需要知道变量的名字
 - var x int 声明一个x变量，&x 代表x的指针，*int 代表指针对应的数据类型
 - go pointer 的地址不是固定的，那么 我们是么时候 返回 `&x` 什么时候返回`*x`
+- go pointer: 两个指针如果指向同一个地址，那么它们相等
+- go pointer: two nil value equals
 
 ### 接口
 
