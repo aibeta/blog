@@ -144,7 +144,6 @@
 - go map 用于测试map里面是否存在某个元素 `if age, ok := ages["bob"]; !ok{}`
 - go map 如果我们想让一个slice作为 key也是可以的，就是每次操作map时先把slice转为**string**
 
-
 ### json
 
 - go json 结构体成员可以添加tag  `json:"released,omitempty"` omitempty 代表它可能为空
@@ -207,6 +206,10 @@
 - go 可以通过 select{} 来阻塞线程
 - sync.Mutex 超过1次的lock 会导致线程阻塞，mu.Unlock() 之后才会解除这个阻塞继续向下执行
 
+### 反射
+
+- go 里面的反射是指动态地获取一个变量(可以是interfate{}) 的类型信息和值信息
+
 ### channel
 
 - quit := make(chan os.Signal) 这个声明是什么意思? 声明了一个 os 类型的channel，并且赋值给quit
@@ -214,6 +217,7 @@
 
 ### 类型转化
 
+- string(b) 内置函数，可以把一个rune[] 转化成字符串, json.Marshal 后的[]byte 其实也可以转
 - templatePath.(string) 是把 templatePath 转换成 string 类型的一个操作
 - `templateInfo.(config.Template).Path` 进行格式转化
 - fmt.Sprintf("%s/tpl/**/*")? 把里面的内容格式化为一个字符串, 并且返回，所以前面是大写的S

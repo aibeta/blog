@@ -1,9 +1,5 @@
 # Go Practice Problem
 
-1. vscode初始化时下载包失败
-   1. 复制surge的http代理，配置到vscode里面，打开命令 install tools 下载
-2. 还是提示gocode 安装失败 
-   1. 在终端里直接安装后 go get -u -v github.com/nsf/gocode，再 install tools）
 3. 按照规范写的 fmt.Println("hello \n") 怎么有warn 提示 Println arg list ends with redundant newlinego-vet
    1. ln 本意意味着line
 4. fmt.Println("%d",d ) 会warn提示  Println call has possible formatting directive %d, 
@@ -17,4 +13,3 @@
 10. go 为什么如果使用闭包函数取地址，每次都不一样呢 ，即f() == f() 是false [link](https://docs.hundan.org/gopl-zh/ch2/ch2-03.html)？
 11. `pc[i] = pc[i/2] + byte(i&1)` and `pc[byte(x>>(1*8))]`
 12. `if x := f(); x == 0 `
-

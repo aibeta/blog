@@ -87,6 +87,8 @@
 
 ### Go
 
+- [[go-enviroment]] go 环境配置
+- [[go-redis]] redis 相关
 - [[go-practice-problem]] Go 实践过程中遇到的问题
 <!-- - [[go-practice-notes]] 实践笔记 -->
 - [[go-reading-notes]] go 语言圣经, go 高级编程
@@ -190,6 +192,7 @@
 [nestjs-basic]: nestjs-basic "Nestjs Basic"
 [nestjs-authentication]: nestjs-authentication "Nestjs Authentication"
 [thread-process]: thread-process "Thread Process"
+[go-enviroment]: go-enviroment "Go Enviroment"
 [go-practice-problem]: go-practice-problem "Go Practice Problem"
 [go-reading-notes]: go-reading-notes "Go Reading Notes"
 [go-gin-notes]: go-gin-notes "Go Gin Notes"
@@ -211,6 +214,7 @@
 [vscode]: vscode "Vscode"
 [bash]: bash "Bash"
 [mac]: mac "Mac"
+[system-design]: system-design "System Design"
 [data-structure]: data-structure "Data-structure"
 [algorithm]: algorithm "Algorithm"
 [name]: name "Name"

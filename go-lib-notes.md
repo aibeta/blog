@@ -3,6 +3,10 @@
 - http.Server 里面的 IdleTimeout 是什么意思？在keep-alives 状态下，等待下一个请求的最大时间。
 - http.dir("")  是一个文件系统.
 
+## syscall
+
+- signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT) 这几个动作都是程序中止的信号，发生的时候会往 quit 里面写数据
+
 ## logrus
 
 - logrus.Warnf() 用于打印日志
