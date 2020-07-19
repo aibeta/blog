@@ -19,7 +19,7 @@
 
 - [x] 怎么判断一个元素的类型？reflect.TypeOf(x)
 - [x] 怎么设置一个redis，使用 `resp, _ := comps.RedisCache.Get(key).Result()`
-- [x] 判断登录状态不能用装饰器，可以使用什么？中间件，如果不
+- [x] 判断登录状态不能用装饰器，可以使用什么？中间件
 - [x] 我们在 gin.context 设置的变量，只会在当前一次请求里有效
 - [x] xorm里mysql的表结构是在哪定义的? 在 model 里定义，使用 xorm 的 Sync2 方法进行检测和创建表
 
