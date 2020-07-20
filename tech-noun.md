@@ -6,7 +6,7 @@
 - OTA over-the-air 空中更新，常见的就是固件升级
 - MCU 嵌入式里面的单片机
 - gateway 网关
-- devops
+- devops 
 - REST Representational State Transfer 客户端分离、无状态、易缓存、唯一 GET/POST/DELETE/PUGT
 - SOAP Simple Object Access Protocol
 - rpc 是一个怎么样的协议？ remote-procedure-call 远程方法调用，是一种进程间通信的模式，可以用于跨平台远程调用。
@@ -17,6 +17,11 @@
   - Base64图片就相当于把一张 jpg、png、gif等图片进行了编码，从而省去了一次 http 请求
 - Byte, 1 Byte === 8 bit, 一个ASCII码就是一个字节，一个中文占据两个字节, 在 UTF-8 编码中，英文是一个字节，中文是三个字节
 - 读写竟态
+
+## 工具
+
+- supervisor 是一个linux上的进程管理工具，类似的有pm2, systemd
+- yaml 是一个语言，以.yml 结尾，通常用于写配置文件
 
 ## 数据库
 

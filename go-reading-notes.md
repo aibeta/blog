@@ -188,10 +188,17 @@
 
 ### 接口
 
+- go interface 我们声明了一个类型`type Counter int` ，也同样可以给 `Counter` 添加方法
+- go interface 注意 T 类型的值不拥有所有 `*T` 指针的方法
 - go interface 如果一个对只要看起来是某种接口类型的实现，那么就可以作为该接口类型使用
 - go interface 可以让我们创建一个新的接口类型满足已存在的具体类型，但是不破坏该原有类型
 - go interface 延迟绑定，我们继承的只是规范，就是说在运行时，才会去检测 interface 里面的方法是否真的存在,
-- go interface 这里有两个例子需要代码验证
+- go interface 一个接口值，包含了一个动态的接口类型和一个动态的接口值
+- go interface 接口类型的隐式转换 `var w io.Writer;` 后，`w = os.Stdout` 和 `w = io.Writer(os.Stdout)` 等价，此时接口值的动态类型是 `*os.File` 指针的类型描述符，它的动态值是一个指向 os.File 类型变量的指针
+- go interface 两个接口值都是nil 的时候才相等，或者是可比较的动态类型（int、string、boolean，基本类型和指针）；切片、函数、映射是不可比较的
+- go interface 如果我们声明了一个 `var buf = *bytes.Buffer`，注意这时候buf 是不等于nil的，如果想要它为nil，需要声明为 io.Writer
+- go interface 内置了sort包，sort.Strings()，可以对字符串切片进行排序，`sort.Sort(sort.Reverse(sort.StringSlice(x)))` 反向排序， StringSlice 是一个类型，实现了排序需要的三个方法 `len` `less` `swap`，任何实现排序接口的类型，都可以调用 `sort.Sort` 进行排序
+
 
 ### 多线程
 
@@ -211,10 +218,6 @@
 - go 可以通过 select{} 来阻塞线程
 - sync.Mutex 超过1次的lock 会导致线程阻塞，mu.Unlock() 之后才会解除这个阻塞继续向下执行
 
-### 反射
-
-- go 里面的反射是指动态地获取一个变量(可以是interfate{}) 的类型信息和值信息
-
 ### channel
 
 - quit := make(chan os.Signal) 这个声明是什么意思? 声明了一个 os 类型的channel，并且赋值给quit
@@ -227,6 +230,12 @@
 - `templateInfo.(config.Template).Path` 进行格式转化
 - fmt.Sprintf("%s/tpl/**/*")? 把里面的内容格式化为一个字符串, 并且返回，所以前面是大写的S
 - fmt.Sprintf("%s:%d", "a", 1) 这个函数的返回值是什么？返回一个第一个格式化函数格式化后的 string
+- fmt.Sscanf(s, "%f%s", &value, &unit) 把字符串s分离，然后解析 ` var value float64; var unit string `
+- fmt.Printf("%T", w) 显示一个变量的类型，如果在包里想获得类型，就需要用到反射
+
+### 反射
+
+- go 里面的反射是指动态地获取一个变量(可以是interfate{}) 的类型信息和值信息
 
 ### reference
 

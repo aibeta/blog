@@ -11,7 +11,7 @@
 - 将标签推送到远程 `git push origin v1.0`
 - 删除一个本地分支 `git branch -D feature/~`
 - 将本地的分支和远程的对应 `git branch --set-upstream-to=origin/develop`
-- 放弃尚未 add 的更改 `git checkout .` （checkout：切换分支 | 移除尚未 add 的修改）
+- 放弃尚未 add 的更改 `git checkout .` （checkout：切换分支,移除尚未 add 的修改）
 - 切换分支的时候，将当前分支修改的内容一起打包带走，同步到切换的分支下。 `git checkout --merge <branch>`
 - 删除远程分支 `git remote rm origin`
 - 删除本地的remote 分支 `git branch -dr origin/hotfix/2019-05-31-fix`
