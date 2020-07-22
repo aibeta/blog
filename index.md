@@ -96,6 +96,10 @@
 - [[go-xorm-notes]] xorm 笔记
 - [[go-lib-notes]] lib 笔记
 
+### database
+
+- [[mysql-notes]] mysql notes
+
 ### 设计模式
 
 - [[observer]] 观察者模式
@@ -206,6 +210,7 @@
 [go-gin-notes]: go-gin-notes "Go Gin Notes"
 [go-xorm-notes]: go-xorm-notes "Go Xorm Notes"
 [go-lib-notes]: go-lib-notes "Go Lib Notes"
+[mysql-notes]: mysql-notes "Mysql Notes"
 [observer]: observer "Observer"
 [adapter]: adapter "Adapter"
 [strategy]: strategy "Strategy"
