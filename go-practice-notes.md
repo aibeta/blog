@@ -26,3 +26,7 @@
 ## reference
 
 - [context](https://www.flysnow.org/2017/05/12/go-in-action-go-context.html)
+
+## Week2
+
+- [ ] `swich x := x.(type)` 后面的 case 在什么情况下会是 `Stringer`

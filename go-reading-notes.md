@@ -225,6 +225,7 @@
 
 ### 类型转化
 
+- 可以使用 T(x)，用于将 x 转化为 T 类型，数值之间的类型可以互相转化，字符串和slice之间有时候也可以互转
 - string(b) 内置函数，可以把一个rune[] 转化成字符串, json.Marshal 后的[]byte 其实也可以转
 - templatePath.(string) 是把 templatePath 转换成 string 类型的一个操作
 - `templateInfo.(config.Template).Path` 进行格式转化
