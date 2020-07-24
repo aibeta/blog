@@ -96,9 +96,10 @@
 - [[go-xorm-notes]] xorm 笔记
 - [[go-lib-notes]] lib 笔记
 
-### database
+### 后端相关
 
 - [[mysql-notes]] mysql notes
+- [[gRPC]] gRPC
 
 ### 设计模式
 
