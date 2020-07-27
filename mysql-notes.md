@@ -1,5 +1,10 @@
 # Mysql Notes
 
+## 常用命令
+
+```
+```
+
 ## 索引
 
 建立索引会生成一个平衡树，主键的索引称为聚合索引，叶子节点可以取到数据，其他的非聚合索引取到的是主键
@@ -38,3 +43,12 @@ expression LIKE pattern [ ESCAPE 'escape_character' ]
 ```
 
 pattern 有两种 `%` 代表0次或者任意次，`_`代表一次； `Not Like` 也是有效的；如果要转译，可以使用 \ 或者是 Escape 关键词.
+
+### in
+
+in 查询主要是为了减少在 `select`, `insert`, `delete`, `update` 时会多次使用 or 的问题
+
+```sql
+WHERE last_name IN ('Johnson', 'Anderson');
+WHERE last_name = 'Johnson' OR last_name = 'Anderson'
+```

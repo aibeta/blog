@@ -120,6 +120,7 @@
 - [[docker]] 常用命令、docker-compose 例子
 - [[git]] git
 - [[vim]] vim
+- [[iterm]] iterm
 - [[vscode]] vscode 快捷键
 - [[bash]] bash
 - [[mac]] mac
@@ -225,6 +226,7 @@
 [docker]: docker "Docker"
 [git]: git "Git"
 [vim]: vim "Vim"
+[iterm]: iterm "Iterm"
 [vscode]: vscode "Vscode"
 [bash]: bash "Bash"
 [mac]: mac "Mac"
