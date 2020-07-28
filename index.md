@@ -92,6 +92,7 @@
 - [[go-practice-problem]] Go 实践过程中遇到的问题
 <!-- - [[go-practice-notes]] 实践笔记 -->
 - [[go-reading-notes]] go 语言圣经, go 高级编程
+- [[go-interface-notes]] go interface
 - [[go-gin-notes]] gin 笔记
 - [[go-xorm-notes]] xorm 笔记
 - [[go-lib-notes]] lib 笔记
@@ -205,6 +206,7 @@
 [nestjs-basic]: nestjs-basic "Nestjs Basic"
 [nestjs-authentication]: nestjs-authentication "Nestjs Authentication"
 [thread-process]: thread-process "Thread Process"
+[Django]: django "Django"
 [go-enviroment]: go-enviroment "Go Enviroment"
 [go-redis]: go-redis "Go Redis"
 [go-practice-problem]: go-practice-problem "Go Practice Problem"
@@ -213,6 +215,7 @@
 [go-xorm-notes]: go-xorm-notes "Go Xorm Notes"
 [go-lib-notes]: go-lib-notes "Go Lib Notes"
 [mysql-notes]: mysql-notes "Mysql Notes"
+[gRPC]: grpc "GRPC"
 [observer]: observer "Observer"
 [adapter]: adapter "Adapter"
 [strategy]: strategy "Strategy"

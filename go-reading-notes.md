@@ -186,19 +186,6 @@
 - go pointer: 两个指针如果指向同一个地址，那么它们相等
 - go pointer: two nil value equals
 
-### 接口
-
-- go interface 我们声明了一个类型`type Counter int` ，也同样可以给 `Counter` 添加方法
-- go interface 注意 T 类型的值不拥有所有 `*T` 指针的方法
-- go interface 如果一个对只要看起来是某种接口类型的实现，那么就可以作为该接口类型使用
-- go interface 可以让我们创建一个新的接口类型满足已存在的具体类型，但是不破坏该原有类型
-- go interface 延迟绑定，我们继承的只是规范，就是说在运行时，才会去检测 interface 里面的方法是否真的存在,
-- go interface 一个接口值，包含了一个动态的接口类型和一个动态的接口值
-- go interface 接口类型的隐式转换 `var w io.Writer;` 后，`w = os.Stdout` 和 `w = io.Writer(os.Stdout)` 等价，此时接口值的动态类型是 `*os.File` 指针的类型描述符，它的动态值是一个指向 os.File 类型变量的指针
-- go interface 两个接口值都是nil 的时候才相等，或者是可比较的动态类型（int、string、boolean，基本类型和指针）；切片、函数、映射是不可比较的
-- go interface 如果我们声明了一个 `var buf = *bytes.Buffer`，注意这时候buf 是不等于nil的，如果想要它为nil，需要声明为 io.Writer
-- go interface 内置了sort包，sort.Strings()，可以对字符串切片进行排序，`sort.Sort(sort.Reverse(sort.StringSlice(x)))` 反向排序， StringSlice 是一个类型，实现了排序需要的三个方法 `len` `less` `swap`，任何实现排序接口的类型，都可以调用 `sort.Sort` 进行排序
-
 
 ### 多线程
 
@@ -233,10 +220,58 @@
 - fmt.Sprintf("%s:%d", "a", 1) 这个函数的返回值是什么？返回一个第一个格式化函数格式化后的 string
 - fmt.Sscanf(s, "%f%s", &value, &unit) 把字符串s分离，然后解析 ` var value float64; var unit string `
 - fmt.Printf("%T", w) 显示一个变量的类型，如果在包里想获得类型，就需要用到反射
+- 把一个[]int，转化为逗号分割的字符串，先用 `json.Marshal`，再用 `string(jsonResult)`。。。。。
+- `Data.(*[]*BookAbsDTO)` Data 是一个 interface, 这里是对它进行转化
+- `result := http.HttpResult{Data: &[]*BookAbsDTO{}}` 我们可以在声明时，重新指定一个 interface 的接口类型
 
 ### 反射
 
 - go 里面的反射是指动态地获取一个变量(可以是interfate{}) 的类型信息和值信息
+- `reflect.Typeof(a interface{}) Type` 返回一个 type 接口类型，包含了一些通用的方法，一些特定类型还会有特定的方法
+
+```go
+type Student struct {
+    Name string "学生姓名"
+}
+s := Student() //
+rt := reflect.Typeof(s) // 得到一个 rtype，
+fieldName, ok := rt.FiledByName("Name")
+filedName.Tag() // 返回结构体声明时的tag： 学生姓名
+rt.Name() // 返回 type 的name ： Student
+rt.Kind().String() // 返回 s 的类型：Struct，这个是返回的底层的基础类型
+```
+
+- `reflect.Typeof(a)` 如果 a 是一个具体类型变量，那么就返回具体的类型信息。如果 a 是接口变量且绑定了具体类型实例，那么返回实例信息；否则返回的是接口自身的静态类型信息
+
+```go
+type B struct {
+    b string
+}
+type Ita interface {
+    String() string // ??
+}
+func (b B) String() string {
+    return b.b
+}
+ita := new Ita()
+var itb Ita = B{"tata"}
+relect.Typeof(ita).Elem().Name() // ita
+relect.Typeof(ita).Elem().Kind().String() // interface 底层是 interface
+reflect.Typeof(itb).Elem().Name() // B , 因为绑定了具体的实例，也就是接口的动态类型
+reflect.TypeOf(itb).Elem().Kind().String() // struct
+```
+
+- `reflect.Value` 是一个 struct，提供了一系列的 method 给使用者，调用 `relect.Valueof(i interface{}) Value`
+
+```go
+o := Student("rock")
+v := relfect.Valueof(o)
+t := v.Type() // struct：获取 v 的类型
+n := v.Name() // Student： 获取 v 的名称
+field := v.Filed(0) // 通过整数索引到 field
+field.Name, file.Type, filed.interface()// name, string, rock， 这里是获取到具体的值
+```
+
 
 ### reference
 

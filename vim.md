@@ -1,5 +1,12 @@
 # Vim
 
+- delete 3 charactor `3x`
+- replace current word with yanked `ve p`
+- replace a word with other word `%s/book/chapter` .如果有 `/g` 则是全局替换，如果想重复上一次替换，使用 `:+️`
+- 选中一个单词，给他加上引号 
+- 赋值到寄存器2 `"2yw, "2p`
+- 赋值一个word，删除一个word，粘贴第一个work `yw, dw, "0p`  `"0 ` 表示上一次 yank， `"1` 表示上一次的 delete/change
+
 ## 频繁操作
 
 - vit" || vat" 选取"之内的内容"
