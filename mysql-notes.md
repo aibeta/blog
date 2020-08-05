@@ -3,6 +3,10 @@
 ## 常用命令
 
 ```
+// 创建表
+create database project_test;
+// 修改列名
+alter table customer change customercity customer_city VARCHAR(225);
 ```
 
 ## 索引
@@ -52,3 +56,57 @@ in 查询主要是为了减少在 `select`, `insert`, `delete`, `update` 时会�
 WHERE last_name IN ('Johnson', 'Anderson');
 WHERE last_name = 'Johnson' OR last_name = 'Anderson'
 ```
+
+
+sql structured query language
+关系数据库返回的数据必须是二维关系表，列是字段，行是记录，关系数据必须以行为单位进行读写
+一条sql语句由关键字、标名、列名组成，SQL 语句分为3类
+- DDL(data definition lannguage) 数据定义，create/drop/alter
+- DML(data Manipulation language) 数据操纵 select/insert/update/delete
+- DCL(data control language) 数据控制 commit/roolback/grant/revoke
+- 字符串'a', 日期'2010-10-10'，数字1，称为常数
+- 一个书写习惯是：关键字大写
+
+    ```sql
+    CREATE DATABASE shop;
+    CREATE TABLE Product(
+    product_id  CHAR(4) NOT NULL,
+    product_name VARCHAR(100) NOT NULL,
+    sale_price INTERGER ,
+    regist_date DATE ,
+    PRIMARY KEY (product_id)
+    )
+    ```
+
+- CHAR 类型是固定长度的类型，VARCHAR 是可变长度
+- *约束* 是除了数据类型外，对数据对限制和条件
+- key：在指定特定数据时使用的列的组合，主键就是可以特定一行数据的列
+
+    ```sql
+    DROP TABLE Product;
+    ALTER TABLE Product ADD COLUMN  Product_name_pinyin VARCHAR(100); // 给表增加一列
+    ALTER TABLE Product DROP COLUMN product_name_pinyin; // 给表删除一列
+    INSERT INTO Product VALUES('001', 'name', 100, '2020-10-10'); // ??
+    // 重命名一个表
+    ```
+
+- select as
+
+    ```sql
+    SELECT product_id, product_name, sale_price AS price // 可以使用 as 设定别名，可以中文，用双引号扩起来
+    FROM product;
+    ```
+
+- select 常数查询
+
+    ```sql
+    SELECT '商品' AS string, 38 AS number, product_id, product_name // 常数会填充每一行
+    FROM product;
+    ```
+
+- select distint 删除重复数据，如果使用了多个字段，那么同时满足两个条件的重复行会被移除
+
+    ```sql
+    SELECT DISINCT product_type // null 也算是一条数据
+    FROM product;
+    ```

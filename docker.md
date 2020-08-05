@@ -5,14 +5,17 @@
 ### 查看命令
 
 - docker info
-- 列出所有运行中的container：docker ps 
 - 列出所有images：docker images
+- 运行1个 image: docker run
 - 列出所有volume：docker volume ls
 - 列出volume的信息：docker inspect volumn-name
 - 查看日志： docker logs container --tail	20 --follow
 
 ### contanier
 
+- 列出所有运行中的container：docker ps 
+- 退出一个 container: ctrl+d
+- 向一个container 内部拷贝一个文件 `docker cp file.sql <CONTAINER ID>:/file.sql`
 - 进入项目container： docker exec -it container /bin/sh
 - 进入mysql的container： docker exec -it container bash
 
@@ -86,3 +89,9 @@ volumes:
     mysql_volume:
         external: false
 ```
+
+### 将测试环境的包发布到prod 环境
+
+1. `docker build -t docker.io/_docker_hub_id_/_project_name`
+2. `docker login` 
+3. `docker push docker.io/_docker_hub_id_/_project_name`

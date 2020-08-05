@@ -4,6 +4,7 @@
 
 ### Git 基础命令
 
+- stash untracked 的文件 `git stash --all` (还包括了 ignore 的文件)
 - 拉取所有的分支 git fetch --all
 - 切换到一个远程到分支上面 `git checkout --track -b hotfix/2019-09-03-1140/fix-font origin/hotfix/2019-09-03-1140/fix-font`
 - git 修剪，移除远程已经没有的分支：`git fetch origin --prune`
