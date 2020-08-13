@@ -1,5 +1,9 @@
 # Vim
 
+- 在函数内部跳转到花括号处 
+- 多行光标删除 `这个用宏最好了`
+- 对多行用宏 `150@n`
+- 前一个光标所在 `g-`
 - delete 3 charactor `3x`
 - replace current word with yanked `ve p`
 - replace a word with other word `%s/book/chapter` .如果有 `/g` 则是全局替换，如果想重复上一次替换，使用 `:+️`
@@ -9,7 +13,7 @@
 
 ## 频繁操作
 
-- vit" || vat" 选取"之内的内容"
+- vi" || va" 选取"之内的内容
 - vit( || vit{ 选取{之内的内容}}
 
 ## vim
@@ -296,4 +300,4 @@ useSystemClipboard
 - 重选上次的高亮选区 gv
 - 移动选区的起始光标 o
 - 标签里的内容设置为大写 guit
-- 把一行字符全部替换为- Vr-
+- 把一行字符全部替换为- Vr-gg

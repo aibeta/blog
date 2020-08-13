@@ -12,7 +12,6 @@ alter table customer change customercity customer_city VARCHAR(225);
 ## 索引
 
 建立索引会生成一个平衡树，主键的索引称为聚合索引，叶子节点可以取到数据，其他的非聚合索引取到的是主键
-
 - key 或者index 可以建立索引，可以加快查询的速度，但是会降低写入的速度。
 - unique key 索引是 key 的一种，只是约束了 key 的值必须是 unique 的
 - primary key 索引是一种 unique key，只是约束了一个表里只能建立一个主键
