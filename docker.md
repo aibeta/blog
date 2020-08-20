@@ -4,12 +4,13 @@
 
 ### 查看命令
 
-- docker info
+- `docker info`
 - 列出所有images：docker images
 - 运行1个 image: docker run
 - 列出所有volume：docker volume ls
 - 列出volume的信息：docker inspect volumn-name
-- 查看日志： docker logs container --tail	20 --follow
+- 查看日志：docker logs container --tail	20 --follow
+- 查看网络：docker network inspect bridge
 
 ### contanier
 
@@ -34,6 +35,7 @@
 
 ### 停止和移除
 
+- 移除未被使用的image：docker image prune
 - 移除所有container： docker rm -vf $(docker ps -a -q)
 - 移除所有image： docker rmi -f $(docker images -a -q)
 - 移除所有volume：docker volume rm $(docker volume ls -q)
@@ -48,6 +50,11 @@
 - 启动一个mysql 容器：docker run -d --restart=always --name db-name -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password mysql
 - 备份数据库：docker exec container /usr/bin/mysqldump -u root --password=password project_test > backup.sql
 - 恢复数据库：cat backup.sql | docker exec -i container /usr/bin/mysql -u root --password=password project_test
+
+### 代理
+
+- 可以为 docker 设置http代理
+- 更为方便的方式是在 dockerfile 里面装包的时候设置源 `RUN pip install -r requirements.txt -i https://pypi.douban.com/simple`
 
 ## docker-compose 示例
 
