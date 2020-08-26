@@ -102,6 +102,7 @@
 - [[mysql-notes]] mysql notes
 - [[gRPC]] gRPC
 - [[nginx]] nginx
+- [[jenkins]] jenkins
 
 ### 设计模式
 
@@ -218,6 +219,7 @@
 [go-lib-notes]: go-lib-notes "Go Lib Notes"
 [mysql-notes]: mysql-notes "Mysql Notes"
 [gRPC]: grpc "GRPC"
+[nginx]: nginx "Nginx"
 [observer]: observer "Observer"
 [adapter]: adapter "Adapter"
 [strategy]: strategy "Strategy"
