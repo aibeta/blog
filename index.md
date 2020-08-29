@@ -117,6 +117,7 @@
 
 ### 常用工具
 
+- [[shell]] linux常用命令
 - [[npm]] npm
 - [[eslint]] eslint
 - [[sentry]] sentry、sourcemap
@@ -220,6 +221,7 @@
 [mysql-notes]: mysql-notes "Mysql Notes"
 [gRPC]: grpc "GRPC"
 [nginx]: nginx "Nginx"
+[jenkins]: jenkins "Jenkins"
 [observer]: observer "Observer"
 [adapter]: adapter "Adapter"
 [strategy]: strategy "Strategy"
