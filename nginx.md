@@ -18,4 +18,38 @@ acme.sh --install-cert -d example.com \
 // 4. 在 nginx 里配置证书路径后重启
 ssl_certificate "/path/to/fullchain/nginx/cert.pem";
 ssl_certificate_key "/path/to/keyfile/in/nginx/key.pem";
+
+// 5. 如果是泛域名证书，配置完成后，要去dns增加子域名的域名解析
+ssl_certificate          /etc/nginx/ssl_cert/fullchain.cer;
+ssl_certificate_key      /etc/nginx/ssl_cert/xxx.key;
+```
+
+## 配置
+```
+// mp3 文件
+location ~ \.(mp3|mp4|wav) {
+  root /data/media;
+}
+
+location /api/ {
+  rewrite ^/api/(.*)$ /$1 break;
+  proxy_pass http://0.0.0.0:7005;
+}
+
+location /api/ {
+  if ($request_method = 'OPTIONS') {
+    add_header 'Access-Control-Max-Age' 1728000;
+    add_header 'Content-Type' 'application/x-www-form-urlencoded; charset=utf-8';
+    add_header 'Access-Control-Allow-Origin' 'http://localhost:3000' always;
+    add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+    add_header 'Content-Length' 0;
+    return 204;
+  }
+  rewrite ^/api/(.*)$ /$1 break;
+  proxy_pass http://0.0.0.0:7005;
+  # add_header 'Access-Control-Allow-Origin''http://localhost:3000' always;
+  add_header 'Access-Control-Allow-Origin' '*' always;
+  add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+  add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+}
 ```
