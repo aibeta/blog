@@ -55,6 +55,7 @@
 <!-- - [[react-router]] router -->
 - [[redux]] redux, connect
 - [[nextjs]] SSR
+- [[nuxtjs]] nuxtjs
 - [[webpack]] 打包原理、优化分包、动态加载、loader、plugin、tree-shaking
 
 <!-- ### JavaScript 实现 -->
@@ -73,6 +74,7 @@
 
 ### NodeJS
 
+- [[nodejs-basic]] nodejs basic
 - [[basic-stream-event]] stream-buffer、event-loop
 - [[event-emitter]] event-emitter
 - [[koa2]] koa2
@@ -131,6 +133,7 @@
 
 ### 系统设计
 
+- [[arcitect-design]] 架构设计
 - [[system-design]] 系统设计
 
 ### CS 基础
@@ -197,12 +200,14 @@
 [mixin-function-css-lib]: mixin-function-css-lib "Mixin Function Css Lib"
 [redux]: redux "Redux"
 [nextjs]: nextjs "Nextjs"
+[nuxtjs]: nuxtjs "Nuxtjs"
 [webpack]: webpack "Webpack"
 [typescript-type]: typescript-type "Typescript Type"
 [typescript-union]: typescript-union "Typescript Union"
 [typescript-generic]: typescript-generic "Typescript Generic"
 [typescript-react]: typescript-react "Typescript React"
 [typescript-diffence]: typescript-diffence "Typescript Diffence"
+[nodejs-basic]: nodejs-basic "Nodejs Basic"
 [basic-stream-event]: basic-stream-event "Basic Stream Event"
 [event-emitter]: event-emitter "Event Emitter"
 [koa2]: koa2 "Koa2"
@@ -229,6 +234,7 @@
 [singleton]: singleton "Singleton"
 [decorator]: decorator "Decorator"
 [module]: module "Module"
+[shell]: shell "Shell"
 [npm]: npm "Npm"
 [eslint]: eslint "Eslint"
 [sentry]: sentry "Sentry"

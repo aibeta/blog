@@ -4,6 +4,9 @@
 
 ### Git 基础命令
 
+- 把某个分支变成主分支，然后让那个分支消失 `git checkout zs; git merge -s ours master; git checkout master; git merge zs`
+- 忽略掉已追踪文件的文件更改 `git update-index --skip-worktree .gitignore`
+- 撤销一次远程提交 `git revert --hard xxx; git push -f origin master`
 - stash untracked 的文件 `git stash --all` (还包括了 ignore 的文件)
 - 拉取所有的分支 git fetch --all
 - 切换到一个远程到分支上面 `git checkout --track -b hotfix/2019-09-03-1140/fix-font origin/hotfix/2019-09-03-1140/fix-font`
