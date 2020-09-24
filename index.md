@@ -9,106 +9,15 @@
 
 - [[backend-index]] 后端
 
-### JavaScript 库
+## 算法，系统设计
 
-- [[vue-notes]] vue 笔记
-- [[vue-responsive]] 响应式原理
-- [[react-life-cycles]] 生命周期
-- [[react-basic-component]] 基本概念与组件
-- [[react-hooks]] hooks
-- [[functional]] 函数式编程
-- [[mixin-function-css-lib]] mixin、函数式编程、css in react、常用react lib
-<!-- - [[react-virtual-dom]] 虚拟 dom -->
-<!-- - [[react-fiber]] react fiber -->
-<!-- - [[react-router]] router -->
-- [[redux]] redux, connect
-- [[nextjs]] SSR
-- [[nuxtjs]] nuxtjs
-- [[webpack]] 打包原理、优化分包、动态加载、loader、plugin、tree-shaking
+- [[algorithm-design-index]]
 
-<!-- ### JavaScript 实现 -->
+### devops
 
-<!-- - [[implement-lib]] 函数实现：debounce, throttle, bind, promise, deepcopy, async -->
-<!-- - [[implement-inherice]]继承实现：prototype, object.create, object.setPrototype, class -->
-<!-- - [[implement-mvvm]] 自己实现一个 mvvm -->
-  
-### TypeScript基础
+- [[devops-index]]
 
-- [[typescript-type]] 普通类型
-- [[typescript-union]] union 类型
-- [[typescript-generic]] 泛型
-- [[typescript-react]] dom, react
-- [[typescript-diffence]] type 和 interface 的区别? ts 类型中都有哪些类型是 js 里没有的？
-
-### NodeJS
-
-- [[nodejs-basic]] nodejs basic
-- [[basic-stream-event]] stream-buffer、event-loop
-- [[event-emitter]] event-emitter
-- [[koa2]] koa2
-- [[nestjs-basic]] NestJS basic
-- [[nestjs-authentication]] NestJS authentication
-- [[thread-process]] 进程与线程
-<!-- - 怎么实现多进程、线程池、进程间通信、websocket 心跳包 -->
-
-### Python
-
-- [[Django]] Django
-
-### Go
-
-- [[go-enviroment]] go 环境配置
-- [[go-redis]] redis 相关
-- [[go-practice-problem]] Go 实践过程中遇到的问题
-<!-- - [[go-practice-notes]] 实践笔记 -->
-- [[go-reading-notes]] go 语言圣经, go 高级编程
-- [[go-interface-notes]] go interface
-- [[go-gin-notes]] gin 笔记
-- [[go-xorm-notes]] xorm 笔记
-- [[go-lib-notes]] lib 笔记
-
-### 后端相关
-
-- [[mysql-notes]] mysql notes
-- [[gRPC]] gRPC
-- [[nginx]] nginx
-- [[jenkins]] jenkins
-
-### 设计模式
-
-- [[observer]] 观察者模式
-- [[adapter]] 适配器模式
-- [[strategy]] 策略模式
-- [[mvx]] mvc 和 mvvm
-- [[singleton]] 单例模式
-- [[decorator]] 装饰着模式
-- [[module]] 模块模式
-
-### 常用工具
-
-- [[shell]] linux常用命令
-- [[npm]] npm
-- [[eslint]] eslint
-- [[sentry]] sentry、sourcemap
-- [[docker]] 常用命令、docker-compose 例子
-- [[git]] git
-- [[vim]] vim
-- [[iterm]] iterm
-- [[vscode]] vscode 快捷键
-- [[bash]] bash
-- [[mac]] mac
-
-### 系统设计
-
-- [[system-design]] 系统设计
-
-### CS 基础
-
-- [[data-structure]] 数据结构
-- [[algorithm]] 算法
-<!-- - leetcode -->
-
-### 笔记
+### book
 
 - [[tech-noun]] 名词解释
 - [[python-read]] 阅读代码
@@ -118,63 +27,9 @@
 [problem-index]: so/problem-index "Problem Index"
 [readme]: readme "Readme"
 [frontend-index]: frontend/frontend-index "Frontend Index"
-[vue-notes]: frontend/vue/vue-notes "Vue Notes"
-[vue-responsive]: frontend/vue/vue-responsive "Vue Responsive"
-[react-life-cycles]: frontend/react/react-life-cycles "React Life Cycles"
-[react-basic-component]: frontend/react/react-basic-component "React Basic Component"
-[react-hooks]: frontend/react/react-hooks "React Hooks"
-[functional]: frontend/javascript/functional "Functional"
-[mixin-function-css-lib]: frontend/react/mixin-function-css-lib "Mixin Function Css Lib"
-[redux]: frontend/react/redux "Redux"
-[nextjs]: backend/nodejs/nextjs "Nextjs"
-[nuxtjs]: frontend/vue/nuxtjs "Nuxtjs"
-[webpack]: frontend/webpack&eslint&babel/webpack "Webpack"
-[typescript-type]: frontend/typescript/typescript-type "Typescript Type"
-[typescript-union]: frontend/typescript/typescript-union "Typescript Union"
-[typescript-generic]: frontend/typescript/typescript-generic "Typescript Generic"
-[typescript-react]: frontend/typescript/typescript-react "Typescript React"
-[typescript-diffence]: frontend/typescript/typescript-diffence "Typescript Diffence"
-[nodejs-basic]: backend/nodejs/nodejs-basic "Nodejs Basic"
-[basic-stream-event]: backend/nodejs/basic-stream-event "Basic Stream Event"
-[event-emitter]: backend/nodejs/event-emitter "Event Emitter"
-[koa2]: backend/nodejs/koa2 "Koa2"
-[nestjs-basic]: backend/nodejs/nestjs-basic "Nestjs Basic"
-[nestjs-authentication]: backend/nodejs/nestjs-authentication "Nestjs Authentication"
-[thread-process]: backend/nodejs/thread-process "Thread Process"
-[Django]: backend/python/django "Django"
-[go-enviroment]: backend/go/go-enviroment "Go Enviroment"
-[go-redis]: backend/go/go-redis "Go Redis"
-[go-practice-problem]: backend/go/go-practice-problem "Go Practice Problem"
-[go-reading-notes]: backend/go/go-reading-notes "Go Reading Notes"
-[go-interface-notes]: backend/go/go-interface-notes "Go Interface Notes"
-[go-gin-notes]: backend/go/go-gin-notes "Go Gin Notes"
-[go-xorm-notes]: backend/go/go-xorm-notes "Go Xorm Notes"
-[go-lib-notes]: backend/go/go-lib-notes "Go Lib Notes"
-[mysql-notes]: backend/mysql-notes "Mysql Notes"
-[gRPC]: backend/go/grpc "GRPC"
-[nginx]: devops/nginx "Nginx"
-[jenkins]: devops/jenkins "Jenkins"
-[observer]: so/observer "Observer"
-[adapter]: frontend/designpattern/adapter "Adapter"
-[strategy]: frontend/designpattern/strategy "Strategy"
-[mvx]: so/mvx "Mvx"
-[singleton]: frontend/designpattern/singleton "Singleton"
-[decorator]: frontend/designpattern/decorator "Decorator"
-[module]: frontend/designpattern/module "Module"
-[shell]: devops/shell "Shell"
-[npm]: backend/nodejs/npm "Npm"
-[eslint]: frontend/webpack&eslint&babel/eslint "Eslint"
-[sentry]: devops/sentry "Sentry"
-[docker]: devops/docker "Docker"
-[git]: devops/git "Git"
-[vim]: devops/vim "Vim"
-[iterm]: devops/iterm "Iterm"
-[vscode]: devops/vscode "Vscode"
-[bash]: devops/bash "Bash"
-[mac]: devops/mac "Mac"
-[system-design]: algorithm&design/system-design "System Design"
-[data-structure]: algorithm&design/data-structure "Data-structure"
-[algorithm]: algorithm&design/algorithm "Algorithm"
+[backend-index]: backend/backend-index "Backend Index"
+[algorithm-design-index]: algorithm&design/algorithm-design-index "Algorithm Design Index"
+[devops-index]: devops/devops-index "Devops Index"
 [tech-noun]: book/tech-noun "Tech Noun"
 [python-read]: backend/python/python-read "Python Read"
 [clean-code]: book/clean-code "Clean Code"
