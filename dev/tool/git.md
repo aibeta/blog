@@ -4,6 +4,7 @@
 
 ### Git 基础命令
 
+- 把当前所有提交整合成一个，然后提交 = `git reset "..." ; git push -f`
 - 把某个分支变成主分支，然后让那个分支消失 `git checkout zs; git merge -s ours master; git checkout master; git merge zs`
 - 忽略掉已追踪文件的文件更改 `git update-index --skip-worktree .gitignore`
 - 撤销一次远程提交 `git revert --hard xxx; git push -f origin master`
