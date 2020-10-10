@@ -9,7 +9,3 @@
   - Ctrl + s 暂停 tail 命令
   - Ctrl + q 继续 tail 命令
 - shift + f(即 F) less 查看滚动的命令，实现效果类似 tail -f 效果
-- grep 'key word' log.txt -A 20 列出包括匹配行之后 20 的行
-- grep -nri "ie8" . 递归查看当前目录下文件，找出含有 ie8 关键词的
-
-- ls -laShR 所有文件，按尺寸order，并显示尺寸
