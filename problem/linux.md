@@ -1,5 +1,10 @@
 # linux
 
+### 抓包
+
+- wireshark 过滤: (http.request or tls.handshake.type eq 1) and !(ssdp) 
+- `scp `
+
 ### 基础命令
 
 - 压缩: `tar --exclude='./node_modules' -zcvf ~/Desktop/oper.zip .` tar folder, exclude node_modules

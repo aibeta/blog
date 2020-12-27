@@ -2,16 +2,24 @@
 
 ## 常用命令
 
-```mysql
-// 连接
-mysql -u username -puserpwd -h xxx.mysql.rds.aliyuncs.com
-// 创建表
-create database project_test;
-// 修改列名
-alter table customer change customercity customer_city VARCHAR(225);
-// 导出表
-mysqldump -d  -u root  -pve8uuuuu -h mysql.mysql.com dbname --column-statistics=0 > dump.sql
-```
+- 连接 `mysql -u username -puserpwd -h xxx.mysql.rds.aliyuncs.com`
+- 创建表 `create database project_test;`
+- 修改列名 `alter table customer change customercity customer_city VARCHAR(225);`
+- 显示数据库的大小 `SELECT table_schema "DB Name", ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) "DB Size in MB"  FROM information_schema.tables GROUP BY table_schema; `
+- 数据库连接 `/data/server/mysql/bin/mysql -urose -proseRKFR123$ -h127.0.0.1 -P 3316 rose`
+
+## 导出
+
+- 导出表(mysql8) `mysqldump -d  -u root  -pve8uuuuu -h mysql.mysql.com dbname --column-statistics=0 > dump.sql`
+- 导出表(docker) `docker exec a336c11ea10a /usr/bin/mysqldump -uroot -pTcuvDNpRdjzpkwourKJT project_test > backup.sql`
+- 恢复(docker) `cat backup.sql | docker exec -i 77bf2835529c /usr/bin/mysql -uroot -pTcuvDNpRdjzpkwourKJT project_test`
+- 导出表的结构 `mysql -uyywap -pyywapYUEYOU -h 192.168.1.205 yywap < yywap_dump.sql`
+- 导出表的数据 `mysqldump -uyywap -pyywapYUEYOU -h 192.168.1.202 --no-create-info  yywap > yywap_data.sql`
+- 导入表 `mysql -uyywap -pyywapYUEYOU -h 192.168.1.205 yywap < yywap_data.sql`
+
+
+## event
+- 延迟更新 `CREATE EVENT IF NOT EXISTS latterUpdate ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 3 MINUTE DO UPDATE t_account set amount=1 where id=1`
 
 ## 索引
 
@@ -114,3 +122,19 @@ sql structured query language
     SELECT DISINCT product_type // null 也算是一条数据
     FROM product;
     ```
+
+### 上线脚本
+
+ALTER TABLE t_user ADD `custom_status` TINYINT NOT NULL DEFAULT 1 COMMENT '通关状态 1: 正常';
+ALTER TABLE t_user ADD `is_officer` TINYINT NOT NULL DEFAULT 0 COMMENT '是否海关工作人员。0:否，1:是。默认0否';
+
+2020-12-23
+
+ALTER TABLE t_order ADD `contact_phone` VARCHAR(16) NOT NULL DEFAULT '' COMMENT '联系电话';
+
+
+2020-12-25(rose)
+
+ALTER TABLE t_goods_category ADD `image_url` varchar(1024) NOT NULL COMMENT '图片地址';
+ALTER TABLE t_goods_category ADD `is_show` TINYINT NOT NULL DEFAULT 1 COMMENT '是否显示，1: 显示, 0: 隐藏'; 
+ALTER TABLE t_act_banner ADD `jump_good_id` INT NOT NULL DEFAULT 0 COMMENT '跳转商品id'; 

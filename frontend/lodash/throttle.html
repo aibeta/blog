@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  .lux-toast {
+    background: rgba(0,0,0,.7);
+    width: 80px;
+    height: 40px;
+    color: #fff;
+    position: fixed;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    left: 200px;
+    top: 128px;
+    border-radius: 6px;
+  }
+  .lux-d-f {
+    display: flex;
+  }
+  .lux-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lux-lh28 {
+    line-height: 28;
+  }
+  .lux-fz28 {
+    font-size: 14px;
+  }
+  p {
+    margin: 4px;
+  }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // esling
+    /**
+     * lodash (Custom Build) <https://lodash.com/>
+     * Build: `lodash modularize exports="npm" -o ./`
+     * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+     * Released under MIT license <https://lodash.com/license>
+     * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+     * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+     */
+
+    /** Used as the `TypeError` message for "Functions" methods. */
+    let FUNC_ERROR_TEXT = 'Expected a function';
+
+    /** Used as references for various `Number` constants. */
+    let NAN = 0 / 0;
+
+    /** `Object#toString` result references. */
+    let symbolTag = '[object Symbol]';
+
+    /** Used to match leading and trailing whitespace. */
+    let reTrim = /^\s+|\s+$/g;
+
+    /** Used to detect bad signed hexadecimal string values. */
+    let reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+    /** Used to detect binary string values. */
+    let reIsBinary = /^0b[01]+$/i;
+
+    /** Used to detect octal string values. */
+    let reIsOctal = /^0o[0-7]+$/i;
+
+    /** Built-in method references without a dependency on `root`. */
+    let freeParseInt = parseInt;
+
+    /** Detect free variable `global` from Node.js. */
+    let freeGlobal = typeof global === 'object' && global && global.Object === Object && global;
+
+    /** Detect free variable `self`. */
+    let freeSelf = typeof self === 'object' && self && self.Object === Object && self;
+
+    /** Used as a reference to the global object. */
+    let root = freeGlobal || freeSelf || Function('return this')();
+
+    /** Used for built-in method references. */
+    let objectProto = Object.prototype;
+
+    /**
+     * Used to resolve the
+     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+     * of values.
+     */
+    let objectToString = objectProto.toString;
+
+    /* Built-in method references for those with the same name as other `lodash` methods. */
+    let nativeMax = Math.max,
+      nativeMin = Math.min;
+
+    /**
+     * Gets the timestamp of the number of milliseconds that have elapsed since
+     * the Unix epoch (1 January 1970 00:00:00 UTC).
+     *
+     * @static
+     * @memberOf _
+     * @since 2.4.0
+     * @category Date
+     * @returns {number} Returns the timestamp.
+     * @example
+     *
+     * _.defer(function(stamp) {
+     *   console.log(_.now() - stamp);
+     * }, _.now());
+     * // => Logs the number of milliseconds it took for the deferred invocation.
+     */
+    let now = function() {
+      return root.Date.now();
+    };
+
+
+    /**
+     * func 是我们希望执行的函数
+      创建一个防抖函数(debounced function)，在上一次invoke func之后，等待`wait`毫秒后再 invoke `func`
+      这个函数还有一个`cancel`方法，来取消延迟后的 func 调用
+      还有一个`flush`方法，来立刻调用 func
+      提供了 options 可以进行配置，来定义func invoke 在`wait` 毫秒之前还是之后
+      func 在调用时会使用防抖函数传入的参数？
+      持续的调用防抖函数，将会返回上一次 func 执行的结果
+      注意：
+      options.leading == true 表示 func 在延迟开始前调用 （eg）
+      options.trailing == true 表示 func 在延迟开始后调用 (eg)
+      leading 和 trailing 参数如果都是 true，那么 `func` 只会
+      如果 wait == 0 && leading == false， func 会在下一个 tick 执行
+    */
+
+    /**
+     * Creates a debounced function that delays invoking `func` until after `wait`
+     * milliseconds have elapsed since the last time the debounced function was
+     * invoked. The debounced function comes with a `cancel` method to cancel
+     * delayed `func` invocations and a `flush` method to immediately invoke them.
+     * Provide `options` to indicate whether `func` should be invoked on the
+     * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+     * with the last arguments provided to the debounced function. Subsequent
+     * calls to the debounced function return the result of the last `func`
+     * invocation.
+     *
+     * **Note:** If `leading` and `trailing` options are `true`, `func` is
+     * invoked on the trailing edge of the timeout only if the debounced function
+     * is invoked more than once during the `wait` timeout.
+     *
+     * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+     * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+     *
+     * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+     * for details over the differences between `_.debounce` and `_.throttle`.
+     *
+     * @static
+     * @memberOf _
+     * @since 0.1.0
+     * @category Function
+     * @param {Function} func The function to debounce.
+     * @param {number} [wait=0] The number of milliseconds to delay.
+     * @param {Object} [options={}] The options object.
+     * @param {boolean} [options.leading=false]
+     *  Specify invoking on the leading edge of the timeout.
+     * @param {number} [options.maxWait]
+     *  The maximum time `func` is allowed to be delayed before it's invoked.
+     * @param {boolean} [options.trailing=true]
+     *  Specify invoking on the trailing edge of the timeout.
+     * @returns {Function} Returns the new debounced function.
+     * @example
+     *
+     * // Avoid costly calculations while the window size is in flux.
+     * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+     *
+     * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+     * jQuery(element).on('click', _.debounce(sendMail, 300, {
+     *   'leading': true,
+     *   'trailing': false
+     * }));
+     *
+     * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+     * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+     * var source = new EventSource('/stream');
+     * jQuery(source).on('message', debounced);
+     *
+     * // Cancel the trailing debounced invocation.
+     * jQuery(window).on('popstate', debounced.cancel);
+     */
+    function debounce(func, wait, options) {
+      let lastArgs,
+        lastThis,
+        maxWait,
+        result,
+        timerId,
+        lastCallTime,
+        lastInvokeTime = 0,
+        leading = false,
+        maxing = false,
+        trailing = true;
+
+      // 处理 func 异常
+      if (typeof func !== 'function') {
+        throw new TypeError(FUNC_ERROR_TEXT);
+      }
+      // 处理 wait 异常
+      wait = toNumber(wait) || 0;
+
+      if (isObject(options)) {
+        // 设置 leading 为 options 的 leading
+        leading = !!options.leading;
+        maxing = 'maxWait' in options;
+        // 传入的 options 里有 maxWait
+        // 那么取 wait 和 maxWait 中更大的一个
+        maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+        // 如果 options 未传入 trailing，那么设置trailing 为 true，也就是节流之后执行
+        trailing = 'trailing' in options ? !!options.trailing : trailing;
+      }
+
+      function invokeFunc(time) {
+        // 记录上一次的参数和 this， 如果是第一次那么设置为 undefined
+        let args = lastArgs,
+          thisArg = lastThis;
+
+        // 清除上一次记录的 this 和 args
+        lastArgs = lastThis = undefined;
+        // 记录最新一次的执行时间
+        lastInvokeTime = time;
+        // 记录函数执行的结果
+        result = func.apply(thisArg, args);
+        return result;
+      }
+
+      // leading 设置了 false，为什么还会调用 leadingEdge？
+      // leadingEdge 会在 timerId 不存在，同时满足 invoke func 的条件时执行
+      // 如果设置了 leading，那么就执行函数
+      // 如果没有设置，那么返回上一次的 result
+      // 同时设置一个延迟结尾调用的计时器
+      function leadingEdge(time) {
+        // 记录 invoke 时间
+        lastInvokeTime = time;
+
+        // 设置结尾计时器 timerId，用于延迟结尾调用
+        timerId = setTimeout(timerExpired, wait);
+
+        // leading 的时间 执行函数
+        // 如果设置了leading == true，那么立刻执行函数并返回
+        // 否则，返回 undefined，然后等待上面的 timerId 计时器
+        return leading ? invokeFunc(time) : result;
+      }
+
+      function remainingWait(time) {
+        // 当前时间距离上次 call 的时间
+        // 当前时间距离上次 invoke 的时间
+        let timeSinceLastCall = time - lastCallTime,
+          timeSinceLastInvoke = time - lastInvokeTime,
+          // eg：距离上次 call 已有1s，wait 时间设置的为2s，那么需要继续等待 1 s
+          result = wait - timeSinceLastCall;
+          // eg：距离上次invoke 已有1s，maxWait 设置为1.5s，那么需要继续等待 0.5 s
+
+          // 如果 maxWait 存在，那么取上面两个 eg 的最小值
+        return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+      }
+
+      function shouldInvoke(time) {
+        // 当前时间距离上次 call 的时间
+        // 当前时间距离上次 invoke 的时间
+        // call 和 invoke 的区别是什么？ call 是点击了按钮的时间，invoke 是执行了 func 的时间
+
+        let timeSinceLastCall = time - lastCallTime,
+          timeSinceLastInvoke = time - lastInvokeTime;
+
+        // Either this is the first call, activity has stopped and we're at the
+        // trailing edge, the system time has gone backwards and we're treating
+        // it as the trailing edge, or we've hit the `maxWait` limit.
+
+        // 以下表达式返回 true 表示可以进行 invoke func
+        // 1. 第一次调用 
+        // 2. 上次 call 的时间距离现在超过了延迟时间 
+        // 3. 当前时间 - 上次 call 的时间为负值，说明系统时间回退了 
+        // 4. 传入的 options 里有 maxWait，并且距离上次 invoke 时间已经超过了 maxWait
+        // maxWait 是干什么的？
+        return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+          (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+      }
+
+      function timerExpired() {
+        let time = now();
+
+        // 满足 invoke func 条件
+        if (shouldInvoke(time)) {
+          // 当前可以 invoke
+          return trailingEdge(time);
+        }
+        // 不满足 invoke func 的条件，那么就继续等待
+        // 什么情况下不满足：在 wait 的时间内又发生了 call func
+        timerId = setTimeout(timerExpired, remainingWait(time));
+      }
+
+      // 触发延迟后执行
+      // trailingEdge 调用有两种情况：
+      // 1. showInvoke为真
+      // 2. debounced.flush 调用了，意味着需要立刻执行
+      function trailingEdge(time) {
+        // 清除 timerId 为什么？
+        timerId = undefined;
+
+        // Only invoke if we have `lastArgs` which means `func` has been
+        // debounced at least once.
+        // 指定调用发生在延迟之后
+        // lastArgs 存在，表示调用了 debounced，但是还未 invokeFunc
+        // invokeFunc 后，lastArgs 会被清空
+        // debounced.cancel 后，lastArgs 也会被清空
+
+        // 如果设置了trailing == true 同时 
+        if (trailing && lastArgs) {
+          // 执行函数
+          return invokeFunc(time);
+        }
+        // trailing是 flase，说明已经 invokeFunc 了
+        // lastArgs 是 undefined，说明已经 invokeFunc 了
+        // 如果 trailing 设置为 false,
+
+        lastArgs = lastThis = undefined;
+        // 返回上次的执行结果
+        return result;
+      }
+
+      // 取消延迟方法
+      function cancel() {
+        // 清除 timerId
+        if (timerId !== undefined) {
+          clearTimeout(timerId);
+        }
+        // 清除最近一次的 invoke 时间
+        // 清除其他参数
+        lastInvokeTime = 0;
+        lastArgs = lastCallTime = lastThis = timerId = undefined;
+      }
+
+      // flush 方法会立刻调用
+      function flush() {
+        // 没有 timerId，说明等待执行的队列为空，所以就不再 invoke func，而是直接返回 result
+        return timerId === undefined ? result : trailingEdge(now());
+      }
+
+      // 
+      function debounced() {
+        let time = now(),
+          // true 表示可以进行调用
+          isInvoking = shouldInvoke(time);
+
+        // 记录函数的参数，
+        lastArgs = arguments;
+        lastThis = this;
+        // 记录初始化 debounced 的时间
+        // 每一次点击事件就会触发一次 call，记录下 call 的时间
+        lastCallTime = time;
+
+        if (isInvoking) {
+          // 可以 invoke, 同时是第一次调用
+          if (timerId === undefined) {
+            return leadingEdge(lastCallTime);
+          }
+          // timerId 存在
+          // shouldInvoke 里面的第4种情况
+          // 也就是，当前队列里有等待处理的，但是又达到了最大等待时间，所以会更新计时器，同时 invoke func
+          if (maxing) {
+            // 设置定时器
+            timerId = setTimeout(timerExpired, wait);
+            // 立刻执行函数
+            return invokeFunc(lastCallTime);
+          }
+        }
+        // 不满足 invoke func 的条件
+        // 如果不存在 timerId
+        if (timerId === undefined) {
+          // 设置一个定时器
+          timerId = setTimeout(timerExpired, wait);
+        }
+        // timerId 存在，返回上一次函数执行的 result
+        // 这里返回的 result 要么是 undefined，要么是上一次执行的结果
+        return result;
+      }
+      debounced.cancel = cancel;
+      debounced.flush = flush;
+      return debounced;
+    }
+
+    /**
+     * Creates a throttled function that only invokes `func` at most once per
+     * every `wait` milliseconds. The throttled function comes with a `cancel`
+     * method to cancel delayed `func` invocations and a `flush` method to
+     * immediately invoke them. Provide `options` to indicate whether `func`
+     * should be invoked on the leading and/or trailing edge of the `wait`
+     * timeout. The `func` is invoked with the last arguments provided to the
+     * throttled function. Subsequent calls to the throttled function return the
+     * result of the last `func` invocation.
+     *
+     * **Note:** If `leading` and `trailing` options are `true`, `func` is
+     * invoked on the trailing edge of the timeout only if the throttled function
+     * is invoked more than once during the `wait` timeout.
+     *
+     * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+     * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+     *
+     * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+     * for details over the differences between `_.throttle` and `_.debounce`.
+     *
+     * @static
+     * @memberOf _
+     * @since 0.1.0
+     * @category Function
+     * @param {Function} func The function to throttle.
+     * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+     * @param {Object} [options={}] The options object.
+     * @param {boolean} [options.leading=true]
+     *  Specify invoking on the leading edge of the timeout.
+     * @param {boolean} [options.trailing=true]
+     *  Specify invoking on the trailing edge of the timeout.
+     * @returns {Function} Returns the new throttled function.
+     * @example
+     *
+     * // Avoid excessively updating the position while scrolling.
+     * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+     *
+     * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
+     * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
+     * jQuery(element).on('click', throttled);
+     *
+     * // Cancel the trailing throttled invocation.
+     * jQuery(window).on('popstate', throttled.cancel);
+     */
+
+
+    function throttle(func, wait, options) {
+      // leading 指的是 func 在节流开始前调用
+      let leading = true;
+      // trailing 指的是 func 在节流开始后调用
+      let trailing = true;
+
+      if (typeof func !== 'function') {
+        throw new TypeError(FUNC_ERROR_TEXT);
+      }
+      if (isObject(options)) {
+        leading = 'leading' in options ? !!options.leading : leading;
+        trailing = 'trailing' in options ? !!options.trailing : trailing;
+      }
+      return debounce(func, wait, {
+        'leading': leading,
+        'maxWait': wait,
+        'trailing': trailing
+      });
+    }
+
+    /**
+     * Checks if `value` is the
+     * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+     * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+     *
+     * @static
+     * @memberOf _
+     * @since 0.1.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+     * @example
+     *
+     * _.isObject({});
+     * // => true
+     *
+     * _.isObject([1, 2, 3]);
+     * // => true
+     *
+     * _.isObject(_.noop);
+     * // => true
+     *
+     * _.isObject(null);
+     * // => false
+     */
+    function isObject(value) {
+      let type = typeof value;
+      return !!value && (type == 'object' || type == 'function');
+    }
+
+    /**
+     * Checks if `value` is object-like. A value is object-like if it's not `null`
+     * and has a `typeof` result of "object".
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+     * @example
+     *
+     * _.isObjectLike({});
+     * // => true
+     *
+     * _.isObjectLike([1, 2, 3]);
+     * // => true
+     *
+     * _.isObjectLike(_.noop);
+     * // => false
+     *
+     * _.isObjectLike(null);
+     * // => false
+     */
+    function isObjectLike(value) {
+      return !!value && typeof value === 'object';
+    }
+
+    /**
+     * Checks if `value` is classified as a `Symbol` primitive or object.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to check.
+     * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+     * @example
+     *
+     * _.isSymbol(Symbol.iterator);
+     * // => true
+     *
+     * _.isSymbol('abc');
+     * // => false
+     */
+    function isSymbol(value) {
+      return typeof value === 'symbol' ||
+        (isObjectLike(value) && objectToString.call(value) == symbolTag);
+    }
+
+    /**
+     * Converts `value` to a number.
+     *
+     * @static
+     * @memberOf _
+     * @since 4.0.0
+     * @category Lang
+     * @param {*} value The value to process.
+     * @returns {number} Returns the number.
+     * @example
+     *
+     * _.toNumber(3.2);
+     * // => 3.2
+     *
+     * _.toNumber(Number.MIN_VALUE);
+     * // => 5e-324
+     *
+     * _.toNumber(Infinity);
+     * // => Infinity
+     *
+     * _.toNumber('3.2');
+     * // => 3.2
+     */
+    function toNumber(value) {
+      if (typeof value === 'number') {
+        return value;
+      }
+      if (isSymbol(value)) {
+        return NAN;
+      }
+      if (isObject(value)) {
+        let other = typeof value.valueOf === 'function' ? value.valueOf() : value;
+        value = isObject(other) ? (other + '') : other;
+      }
+      if (typeof value !== 'string') {
+        return value === 0 ? value : +value;
+      }
+      value = value.replace(reTrim, '');
+      let isBinary = reIsBinary.test(value);
+      return (isBinary || reIsOctal.test(value))
+        ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+        : (reIsBadHex.test(value) ? NAN : +value);
+    }
+
+// module.exports = throttle;
+// module.exports = debounce;
+  </script>
+</head>
+<body >
+  <div id="app">
+    <ul>
+      <li>
+        <p>wait: 1000ms, leading: true，trailing 不传默认为 true</p>
+        <p>1. 非连续点击下，每次点击之后，然后 invoke func</p>
+        <p>2. 连续点击下(连续时间小于1000)，在第一次点击之后，invoke func</p>
+        <p>3. 连续点击下(连续时间小于1000)，在最后一次点击之后，等待 1000ms, 然后invoke func</p>
+        <button @click="db1">
+            调用db1
+        </button>
+        <button @click="dbcancel1">
+            调用cancel1
+        </button>
+        <button @click="dbflush1">
+            调用flush1
+        </button>
+      </li>
+      <li>
+        <p>wait: 1000ms, trailing: true</p>
+        <p>1. 非连续点击下，每次点击之后，等待 1000ms，然后 invoke func</p>
+        <p>2. 连续点击下(连续时间小于1000)，只在最后一次点击之后，等待 1000ms, 然后invoke func</p>
+        <button @click="db2">
+            调用db2
+        </button>
+      </li>
+      <li>
+        <p>wait: 1000ms, leading: true, trailing: false</p>
+        <p>1. 非连续点击下，每次点击之后，invoke func</p>
+        <p>2. 连续点击下(连续时间小于1000)，只在第一次点击之后，invoke func</p>
+        <button @click="db4">
+            调用db4
+        </button>
+      </li>
+      <li>
+        <p>wait: 1000ms, leading: false, trailing: false</p>
+        <p>任何点击都不会 invoke func</p>
+        <button @click="db5">
+            调用db5
+        </button>
+      </li>
+      <li>
+        <p>wait: 1000ms, maxWait: 2000,</p>
+        <p>1. 非连续点击下，每间隔1000ms invoke func</p>
+        <p>2. 连续点击下，每隔 2000ms 秒会有一次 invoke func</p>
+        <button @click="db6">
+            调用db6
+        </button>
+      </li>
+      <li>
+        <p>throttle: wait: 1000ms, maxWait: 1000,</p>
+        <p>throttle 就是 wait 和 maxWait 相等的 debounce</p>
+        <button @click="db7">
+            调用db7
+        </button>
+      </li>
+    </ul>
+    <div class="lux-w500 lux-toast lux-cfff lux-bdrs6 lux-pos-f lux-t128 luxp-l50 lux-ml-250 lux-pt30 lux-pb30"
+      v-if="toast">
+      <div class="lux-d-f lux-lh30 lux-center">
+        <div class="lux-fz28 lux-center">
+          <p>flash！</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  function formatNumber(n) {
+    const str = n.toString();
+    return str[1] ? str : `0${str}`;
+  }
+  function formatTime(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    const milliSeconds = date.getMilliseconds();
+
+    const t1 = [year, month, day].map(formatNumber).join('/');
+    const t2 = [hour, minute, second, milliSeconds].map(formatNumber).join(':');
+
+    return `${t1} ${t2}`;
+  }
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue!',
+      toast: false,
+    },
+    created() {
+      
+      this.db01 = debounce(this.clg, 1000, { leading: true, });
+      this.db02 = debounce(this.clg, 1000, { trailing: true, });
+      this.db04 = debounce(this.clg, 1000, { leading: true, trailing: false, });
+      this.db05 = debounce(this.clg, 1000, { leading: false, trailing: false, });
+      this.db06 = debounce(this.clg, 1000, { 'maxWait': 2000 });
+      this.db07 = debounce(this.clg, 1000, { 'maxWait': 1000 });
+    },
+    methods: {
+      clg() {
+        const time = formatTime(new Date());
+        console.log(`${time}---执行了点击(invoke func)`);
+        this.showToast();
+        return Date.now();
+      },
+      showToast() {
+        this.toast = true;
+        setTimeout(()=> {
+          this.toast = false;
+        }, 400)
+      },
+      logCall() {
+        const time = formatTime(new Date());
+        console.log(`${time}------------------发生了一次点击(call func)`);
+      },
+      db1() {
+        this.logCall();
+        const a = this.db01();
+      },
+      dbcancel1() {
+        const a = this.db01.cancel();
+      },
+      dbflush1() {
+        const a = this.db01.flush();
+      },
+      db2() {
+        this.logCall();
+        const a = this.db02();
+      },
+      db4() {
+        this.logCall();
+        const a = this.db04();
+      },
+      db5() {
+        this.logCall();
+        const a = this.db05();
+      },
+      db6() {
+        this.logCall();
+        const a = this.db06();
+      },
+      db7() {
+        this.logCall();
+        const a = this.db07();
+      }
+    },
+  })
+</script>
+</html>

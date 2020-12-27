@@ -13,3 +13,4 @@
 10. go 为什么如果使用闭包函数取地址，每次都不一样呢 ，即f() == f() 是false [link](https://docs.hundan.org/gopl-zh/ch2/ch2-03.html)？
 11. `pc[i] = pc[i/2] + byte(i&1)` and `pc[byte(x>>(1*8))]`
 12. `if x := f(); x == 0 `
+13. go 中两个字符串比较，会对两个字符串逐个比较

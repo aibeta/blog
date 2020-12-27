@@ -2,8 +2,21 @@
 
 ## 常用命令
 
+ ```
+docker build -t web .
+docker build -t --no-cache web .
+docker tag web:latest sz_:v2.0.0
+```
+
+- 显示所有容器 `docker container ls --all`
+- 移除所有stoped容器  `docker container prune`
+- 显示所有 image `docker images`
+- 移除不被container引用的容器 `docker image prune --all`
+
 ### 查看命令
 
+- 为 docker build 设置代理 
+    - 一种方法是给内部的 pip 设置代理 `RUN pip install -r requirements.txt -i https://pypi.douban.com/simple`
 - `docker info`
 - 列出所有images：docker images
 - 运行1个 image: docker run
