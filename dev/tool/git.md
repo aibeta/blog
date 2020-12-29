@@ -2,6 +2,7 @@
 
 ## Git 命令
 
+- git pull --rebase 可以避免merge
 ### Git 基础命令
 
 - 把当前所有提交整合成一个，然后提交 = `git reset "..." ; git push -f`

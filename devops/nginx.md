@@ -1,11 +1,16 @@
 # Nginx
 
-## 问题
+
+## problems
 
 - worker 是什么？使用场景是什么？
-- server_name 里面的域名前后顺序有什么区别( 符合条件的都会 pass, 不符合的会被过滤)
-- [[nginx-doc]]
 
+## solved
+
+- server_name 里面的域名前后顺序有什么区别( 符合条件的都会 pass, 不符合的会被过滤)
+- 配置 weight 之后，nginx 会进行权重的负载均衡
+- server 127.0.0.1 就是本机
+- server 192.168.1.1 是由路由分配的内部 network 的 ip
 ## 配置
 ```
 // mp3 文件

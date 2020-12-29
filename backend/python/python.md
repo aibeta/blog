@@ -1,0 +1,3 @@
+- 字符串换行: 在行末尾用 `\`
+- 字符串格式化， `sql = "%s" / (uid) `
+- vscode 里选取 docker-compose 作为 interpreter
