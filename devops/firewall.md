@@ -1,0 +1,8 @@
+
+
+- firewall-cmd --get-active-zones
+
+
+- firewall-cmd --zone=public --add-port=8964/tcp --permanent
+- firewall-cmd --reload
+- firewall-cmd --zone=public --list-all

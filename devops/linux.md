@@ -92,6 +92,7 @@ cd /data/install/
 wget http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.22.tar.gz
 tar -zvxf mysql-5.6.22.tar.gz ; cd mysql-5.6.22
 yum -y install gcc-c++ ncurses-devel cmake make perl gcc autoconf automake zlib libxml libgcrypt libtool bison
+yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
 cmake -DCMAKE_INSTALL_PREFIX=/data/server/mysql      -DMYSQL_DATADIR=/data/mysql/data      -DDEFAULT_CHARSET=utf8      -DMYSQL_TCP_PORT=3316      -DMYSQL_USER=mysql      -DDEFAULT_COLLATION=utf8_general_ci       -DEXTRA_CHARSETS=all       -DENABLED_LOCAL_INFILE=1  
 make && make install
 mkdir -p /data/mysql/3316/; mkdir -p /data/mysql/data;

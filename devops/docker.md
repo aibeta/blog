@@ -8,6 +8,7 @@ docker build -t --no-cache web .
 docker tag web:latest sz_:v2.0.0
 ```
 
+- grep 日志 `docker logs 133ce653a1b8 2>&1 | grep -m 10 "user"`
 - 显示所有容器 `docker container ls --all`
 - 移除所有stoped容器  `docker container prune`
 - 显示所有 image `docker images`
