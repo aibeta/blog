@@ -2,6 +2,8 @@
 
 ## 常用命令
 
+- 更新表 `UPDATE t_v2_raffle_act SET  plat_id=2, version="1.2.0", end_date=DATE_ADD(end_date, INTERVAL 86399 SECOND);`
+- 复制表和数据 `CREATE TABLE tbl_new AS SELECT * FROM tbl_old;`
 - 连接 `mysql -u username -puserpwd -h xxx.mysql.rds.aliyuncs.com`
 - 创建表 `create database project_test;`
 - 修改列名 `alter table customer change customercity customer_city VARCHAR(225);`
@@ -16,6 +18,9 @@
 - 导出表的结构 `mysql -uyywap -pyywapYUEYOU -h 192.168.1.205 yywap < yywap_dump.sql`
 - 导出表的数据 `mysqldump -uyywap -pyywapYUEYOU -h 192.168.1.202 --no-create-info  yywap > yywap_data.sql`
 - 导入表 `mysql -uyywap -pyywapYUEYOU -h 192.168.1.205 yywap < yywap_data.sql`
+
+
+mysqldump -u yyact -pyyactYUEYOU -h 192.168.1.202 --no-create-info --opt --where="1 limit 200000" yyact t_signin_summary  > dump.sql
 
 
 ## event
@@ -132,9 +137,97 @@ ALTER TABLE t_user ADD `is_officer` TINYINT NOT NULL DEFAULT 0 COMMENT '是否�
 
 ALTER TABLE t_order ADD `contact_phone` VARCHAR(16) NOT NULL DEFAULT '' COMMENT '联系电话';
 
-
 2020-12-25(rose)
 
 ALTER TABLE t_goods_category ADD `image_url` varchar(1024) NOT NULL COMMENT '图片地址';
 ALTER TABLE t_goods_category ADD `is_show` TINYINT NOT NULL DEFAULT 1 COMMENT '是否显示，1: 显示, 0: 隐藏'; 
 ALTER TABLE t_act_banner ADD `jump_good_id` INT NOT NULL DEFAULT 0 COMMENT '跳转商品id'; 
+
+
+# 命令行
+
+## mysql
+
+- 连接 `mysql -uyueyou -hmysql.inner.yueyou.com -pmysql123`
+- 进入 `show databases; use yyact; show tables;` 
+- 显示时区 `show variables like "%time_zone%";`
+- 复制 `create table t_cash_raffle_conf_tmp like t_cash_raffle_conf;insert into t_cash_raffle_conf_tmp select * from t_cash_raffle_conf;`
+- 导出 `mysqldump -d  -u root  -pve8uuuuu -h mysql.mysql.com dbname --column-statistics=0 > dump.sql`
+- 导出线上的表限制20w条 `mysqldump -u yyactsigin -p -h rm-m5e9g5i97995rarqy.mysql.rds.aliyuncs.com --no-create-info --opt --where="1 limit 200000" yyactsigin t_signin_summary  > dump.sql`
+
+
+
+### create
+```mysql
+CREATE TABLE t_conf (
+    id char not null
+)
+```
+
+### select
+```mysql
+show create table t_cash_raffle_conf;
+select prize_id, count(*) from t_cash_raffle_record where id > 916589 group by prize_id;
+select prize_id, prize_name, count(*), count(*)/10000.0 from t_cash_raffle_record where id < 10000 group by prize_id order by prize_id ;
+select * from t_task_conf order by id desc limit 10;
+SELECT count(*) FROM `t_v2_material` WHERE name like '%\M-d\M-:\M^L%';
+SELECT count(*) FROM `t_v2_material` WHERE instr(name, 'm-d-d');
+```
+
+### insert
+```mysql
+INSERT INTO Product VALUES('001', 'name', 100, '2020-10-10');
+```
+
+### 更新 
+```mysql
+UPDATE t_cash_raffle_record set click_cnt=click_cnt+1, update_time=? where id=?;
+UPDATE `yyact`.`t_cash_raffle_conf` SET `status` = '2' WHERE `id` = '3';
+UPDATE t_cash_raffle_record SET create_time=REPLACE(create_time, "2020-11-21", "2020-11-20");
+```
+
+### 修改
+
+```mysql
+alter table t_record drop column end_time;
+alter table t_record change id int auto_increment;
+```
+
+### 删除
+```mysql
+DROP TABLE t_record;
+DELETE FROM t_conf_tmp;
+```
+
+### 联表
+```mysql
+SELECT * FROM `t_v2_feed_module_item` AS `fmi` inner JOIN `t_v2_feed` as `f` ON fmi.feed_id = f.id
+```
+
+### 排序
+```mysql
+SELECT * FROM `t_v2_feed_module_item` ORDER BY `feed_click_cnt`*`feed_multiple` DESC
+```
+
+### 分组 group
+
+```mysql
+SELECT feed_module_id, count(*) from t_v2_feed_module_item GROUP BY feed_module_id;
+SELECT feed_module_id, feed_id, count(*) from t_v2_feed_module_item GROUP BY feed_module_id, feed_id;
+```
+
+### 联合 union
+
+把两个表里数据相同的筛选出来
+
+```mysql
+select feed_module_id from t_v2_feed_module_item
+UNION
+SELECT id from t_v2_feed_module
+ORDER BY feed_module_id
+```
+
+```example
+comps.Mysql.Select("display_name, rank_type, prefer").Where(" prefer=?", prefer).GroupBy("rank_type"). Asc("order_no").Find(&mds)
+SELECT * FROM `t_v2_feed_module_item` AS `fmi` inner JOIN `t_v2_feed` as `f` ON fmi.feed_id = f.id ORDER BY `is_top` DESC, `order_no` ASC, `feed_click_cnt`*`feed_multiple` DESC, `feed_modify_time` DESC LIMIT 20
+```

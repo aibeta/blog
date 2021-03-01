@@ -5,7 +5,11 @@ $ password: ve8UtZ8oUFpEAw | lyf52125
 - 改密码 `
 UPDATE mysql.user SET Password=PASSWORD('lyf52125') WHERE User='root';
 FLUSH PRIVILEGES;
-`
+
+
+- 统计第一天用户的获奖情况 `select day,prize_id, amount, count(prize_id), count(prize_id) * amount from t_cash_sign_record  where  sign_id=10 group by day,prize_id;`
+- 统计非第一天抽奖的平均值 `select prize_id, amount, count(prize_id), sum(amount) from t_cash_sign_record  where sign_id=9 and day!=0 group by prize_id;`
+
 
 1. 一个关联表，每隔60个，选取一个 select * from Traffic where id % 1440 = 0
 
@@ -23,6 +27,7 @@ FLUSH PRIVILEGES;
 2. 清空加心表 $ UPDATE User SET like_product = '' WHERE openid = 'obb-O4hTDkb7G8N_JmAoLdU-2mlQ';
 
 INSERT INTO douyu (room_id) VALUES (NULL);
+
 
 
 创建一个表
